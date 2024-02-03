@@ -6,16 +6,11 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 19:45:04 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/03 00:29:10 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/03 23:53:59 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
-
-int		create_map(t_game *game, char *file);
-int		fill_map(t_game *game, char *file);
-void	count_lines(t_game *game, char *file);
-void	free_map(t_game *game);
 
 int	main(int argc, char **argv)
 {
@@ -23,8 +18,13 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 		return (0);
-	// init_game
+	game = NULL;
+	init_game(game);
+	if (count_rows(game, argv[1]) == 0)
+		return (0);
 	//*********** malloc *****************//
+	create_map(game, argv[1]);
+	// printf("ici\n");
 	if (create_map(game, argv[1]) == 0)
 		return (free_map(game), 0);
 	check_map(game);
@@ -32,13 +32,14 @@ int	main(int argc, char **argv)
 
 int	create_map(t_game *game, char *file)
 {
-	count_lines(game, file);
-	if ((*game).nbr_line)
+	count_rows(game, file);
+	printf("ici\n");
+	if ((*game).rows)
 	{
-		(*game).map = malloc(sizeof(char *) * ((*game).nbr_line + 1));
+		(*game).map = malloc(sizeof(char *) * ((*game).rows + 1));
 		if (!(*game).map)
 			return (0);
-		(*game).map[(*game).nbr_line] = NULL;
+		(*game).map[(*game).rows] = NULL;
 		if (fill_map(game, file) == 0)
 			return (free_map(game), 0);
 		return (1);
@@ -50,14 +51,14 @@ int	fill_map(t_game *game, char *file)
 {
 	int		fd;
 	char	*line;
-	int		i;
-	int		j;
+	size_t	i;
+	size_t	j;
 
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 		return (0);
 	i = 0;
-	while (i < (*game).nbr_line)
+	while (i < (*game).rows)
 	{
 		line = get_next_line(fd);
 		(*game).map[i] = malloc(sizeof(char) * (ft_strlen(line) + 1));
@@ -73,15 +74,16 @@ int	fill_map(t_game *game, char *file)
 	return (1);
 }
 
-void	count_lines(t_game *game, char *file)
+int	count_rows(t_game *game, char *file)
 {
 	int		fd;
-	int		count;
+	size_t	count;
 	char	*line;
 
 	fd = open(file, O_RDONLY);
+	printf("fd %d\n", fd);
 	if (fd < 0)
-		return ;
+		return (0);
 	count = 0;
 	line = get_next_line(fd);
 	while (line)
@@ -90,19 +92,31 @@ void	count_lines(t_game *game, char *file)
 		line = get_next_line(fd);
 	}
 	close(fd);
-	(*game).nbr_line = count;
+	printf("%ld\n", count);
+	(*game).rows = count;
+	printf("%ld\n", (*game).rows);
+	return (1);
 }
 
 void	free_map(t_game *game)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	if ((*game).map)
 	{
-		while (i++ < (*game).nbr_line)
+		while (i++ < (*game).rows)
 			if ((*game).map[i])
 				free((*game).map[i]);
 		free((*game).map);
 	}
+}
+
+void	init_game(t_game *game)
+{
+	
+	//(*game).map = NULL;
+	printf("init\n");
+	(*game).rows = 0;
+	(*game).cols = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 20:44:35 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/03 00:28:55 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/03 23:44:20 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,31 @@
 
 # include "get_next_line.h"
 # include "mlx.h"
+# include <stdio.h>
 
 typedef struct s_game
 {
 	char	**map;
-    int nbr_line;
-    
+	size_t	rows;
+	size_t	cols;
+
 }			t_game;
 
+// main.c
+// main
+int			create_map(t_game *game, char *file);
+int			fill_map(t_game *game, char *file);
+int		count_rows(t_game *game, char *file);
+void		free_map(t_game *game);
+void		init_game(t_game *game);
 
-//main.c
-//main
-int		create_map(t_game *game, char *file);
-int		fill_map(t_game *game, char *file);
-void	count_lines(t_game *game, char *file);
-void	free_map(t_game *game);
-
-//check.c
-
+// check.c
+int			check_map(t_game *game);
+char		*check_cols(t_game *game);
+char		*check_vertical_wall(t_game *game);
+char		*check_horizontal_wall(t_game *game);
+char		*check_player(t_game *game);
+char		*check_exit(t_game *game);
+char		*check_collectible(t_game *game);
 
 #endif
