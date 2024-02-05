@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 19:45:04 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/03 23:53:59 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/05 02:31:16 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 		return (0);
-	game = NULL;
-	init_game(game);
+	game = init_game();
 	if (count_rows(game, argv[1]) == 0)
 		return (0);
 	//*********** malloc *****************//
@@ -32,7 +31,10 @@ int	main(int argc, char **argv)
 
 int	create_map(t_game *game, char *file)
 {
-	count_rows(game, file);
+	//count_rows(game, file);
+	(*game).rows = 1;
+	printf("la %ld\n", (*game).rows);
+	printf("%ld\n", (*game).rows);
 	printf("ici\n");
 	if ((*game).rows)
 	{
@@ -81,7 +83,6 @@ int	count_rows(t_game *game, char *file)
 	char	*line;
 
 	fd = open(file, O_RDONLY);
-	printf("fd %d\n", fd);
 	if (fd < 0)
 		return (0);
 	count = 0;
@@ -92,9 +93,7 @@ int	count_rows(t_game *game, char *file)
 		line = get_next_line(fd);
 	}
 	close(fd);
-	printf("%ld\n", count);
 	(*game).rows = count;
-	printf("%ld\n", (*game).rows);
 	return (1);
 }
 
@@ -112,11 +111,14 @@ void	free_map(t_game *game)
 	}
 }
 
-void	init_game(t_game *game)
+t_game	*init_game(void)
 {
-	
-	//(*game).map = NULL;
-	printf("init\n");
-	(*game).rows = 0;
-	(*game).cols = 0;
+	t_game game0;
+	t_game *game;
+
+	game0.map = NULL;
+	game0.rows = 0;
+	game0.cols = 0;
+	game = &game0;	
+	return (game);
 }

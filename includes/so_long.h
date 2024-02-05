@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 20:44:35 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/03 23:44:20 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/05 02:06:21 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ typedef struct s_game
 // main
 int			create_map(t_game *game, char *file);
 int			fill_map(t_game *game, char *file);
-int		count_rows(t_game *game, char *file);
+int			count_rows(t_game *game, char *file);
 void		free_map(t_game *game);
-void		init_game(t_game *game);
+t_game		*init_game();
 
 // check.c
 int			check_map(t_game *game);
