@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 19:45:04 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/05 02:31:16 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/06 00:06:27 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,10 @@ int	main(int argc, char **argv)
 
 int	create_map(t_game *game, char *file)
 {
-	//count_rows(game, file);
-	(*game).rows = 1;
-	printf("la %ld\n", (*game).rows);
+	// count_rows(game, file);
+	//(*game).rows = 1;
+	printf("%ld\n", (*game).rows);
+	printf("%ld\n", (*game).rows);
 	printf("%ld\n", (*game).rows);
 	printf("ici\n");
 	if ((*game).rows)
@@ -119,6 +120,6 @@ t_game	*init_game(void)
 	game0.map = NULL;
 	game0.rows = 0;
 	game0.cols = 0;
-	game = &game0;	
+	game = &game0;
 	return (game);
 }
