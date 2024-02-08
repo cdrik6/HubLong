@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 18:14:41 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/03 22:57:51 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/08 00:31:20 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ char	*initialize_stash(char *keep);
 ssize_t	is_nl(char *str);
 
 char	*ft_strjoin(char *stash, char *buff);
-char	*ft_substr(char *s, size_t start, size_t len);
-size_t	ft_strlen(char *str);
+char	*ft_substr(char *s, int start, int len);
+int		ft_strlen(char *str);
 void	*ft_calloc(size_t nmemb, size_t size);
 
 #endif

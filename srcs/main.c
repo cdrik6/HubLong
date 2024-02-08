@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 19:45:04 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/06 00:06:27 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/08 01:14:49 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,22 @@ int	main(int argc, char **argv)
 	//*********** malloc *****************//
 	create_map(game, argv[1]);
 	// printf("ici\n");
+	/*
 	if (create_map(game, argv[1]) == 0)
 		return (free_map(game), 0);
-	check_map(game);
+	*/
+	// check_map(game);
 }
 
 int	create_map(t_game *game, char *file)
 {
-	// count_rows(game, file);
+	count_rows(game, file);
 	//(*game).rows = 1;
-	printf("%ld\n", (*game).rows);
-	printf("%ld\n", (*game).rows);
-	printf("%ld\n", (*game).rows);
+	printf("%d\n", (*game).rows);
+	printf("%d\n", (*game).rows);
+	printf("%d\n", (*game).rows);
 	printf("ici\n");
+	/*
 	if ((*game).rows)
 	{
 		(*game).map = malloc(sizeof(char *) * ((*game).rows + 1));
@@ -47,15 +50,17 @@ int	create_map(t_game *game, char *file)
 			return (free_map(game), 0);
 		return (1);
 	}
+	*/
 	return (0);
 }
 
+/*
 int	fill_map(t_game *game, char *file)
 {
 	int		fd;
 	char	*line;
-	size_t	i;
-	size_t	j;
+	int		i;
+	int		j;
 
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
@@ -76,11 +81,12 @@ int	fill_map(t_game *game, char *file)
 	close(fd);
 	return (1);
 }
+*/
 
 int	count_rows(t_game *game, char *file)
 {
 	int		fd;
-	size_t	count;
+	int		count;
 	char	*line;
 
 	fd = open(file, O_RDONLY);
@@ -98,9 +104,10 @@ int	count_rows(t_game *game, char *file)
 	return (1);
 }
 
+/*
 void	free_map(t_game *game)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	if ((*game).map)
@@ -111,13 +118,14 @@ void	free_map(t_game *game)
 		free((*game).map);
 	}
 }
+*/
 
 t_game	*init_game(void)
 {
 	t_game game0;
 	t_game *game;
 
-	game0.map = NULL;
+	//	game0.map = NULL;
 	game0.rows = 0;
 	game0.cols = 0;
 	game = &game0;

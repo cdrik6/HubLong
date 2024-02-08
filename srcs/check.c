@@ -6,12 +6,13 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 00:29:14 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/03 23:20:19 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/08 00:46:18 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
+/*
 char	*check_cols(t_game *game);
 char	*check_vertical_wall(t_game *game);
 char	*check_horizontal_wall(t_game *game);
@@ -163,3 +164,4 @@ char	*check_path(t_game *game)
 		return ("Invalid map (collectible missing).\n");
 	return (NULL);
 }
+*/

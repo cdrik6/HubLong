@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 20:44:35 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/05 02:06:21 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/08 00:48:23 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,26 +20,26 @@
 typedef struct s_game
 {
 	char	**map;
-	size_t	rows;
-	size_t	cols;
+	int		rows;
+	int		cols;
 
 }			t_game;
 
 // main.c
 // main
 int			create_map(t_game *game, char *file);
-int			fill_map(t_game *game, char *file);
+// int			fill_map(t_game *game, char *file);
 int			count_rows(t_game *game, char *file);
-void		free_map(t_game *game);
-t_game		*init_game();
+// void		free_map(t_game *game);
+t_game		*init_game(void);
 
-// check.c
-int			check_map(t_game *game);
-char		*check_cols(t_game *game);
-char		*check_vertical_wall(t_game *game);
-char		*check_horizontal_wall(t_game *game);
-char		*check_player(t_game *game);
-char		*check_exit(t_game *game);
-char		*check_collectible(t_game *game);
+// // check.c
+// int			check_map(t_game *game);
+// char		*check_cols(t_game *game);
+// char		*check_vertical_wall(t_game *game);
+// char		*check_horizontal_wall(t_game *game);
+// char		*check_player(t_game *game);
+// char		*check_exit(t_game *game);
+// char		*check_collectible(t_game *game);
 
 #endif

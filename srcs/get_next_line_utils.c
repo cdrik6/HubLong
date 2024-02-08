@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 14:36:17 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/03 22:57:38 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/08 00:33:48 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 char	*ft_strjoin(char *stash, char *buff)
 {
 	char	*join;
-	size_t	i;
-	size_t	j;
+	int		i;
+	int		j;
 
 	if (stash == NULL || buff == NULL)
 		return (free(stash), NULL);
@@ -40,9 +40,9 @@ char	*ft_strjoin(char *stash, char *buff)
 	return (join);
 }
 
-size_t	ft_strlen(char *str)
+int	ft_strlen(char *str)
 {
-	size_t	i;
+	int	i;
 
 	if (!str)
 		return (0);
@@ -52,11 +52,11 @@ size_t	ft_strlen(char *str)
 	return (i);
 }
 
-char	*ft_substr(char *s, size_t start, size_t len)
+char	*ft_substr(char *s, int start, int len)
 {
 	char	*sub;
-	size_t	i;
-	size_t	size;
+	int		i;
+	int		size;
 
 	if (!s)
 		return (NULL);
