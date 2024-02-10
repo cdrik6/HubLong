@@ -1,38 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/10 13:38:30 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/09 23:57:22 by caguillo         ###   ########.fr       */
+/*   Created: 2023/09/16 21:52:17 by caguillo          #+#    #+#             */
+/*   Updated: 2024/02/10 22:40:14 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-char	**ft_strstrdup(char **s)
+char	*ft_strnstr(const char *big, const char *little, int len)
 {
-	char	**str;
 	int		i;
-	int		nbr;
+	int		j;
+	size_t	yes;
 
-	nbr = 0;
-	while (s[i])
-		nbr++;
-	str = malloc(sizeof(char *) * (nbr + 1));
-	
-	
 	i = 0;
-	str = malloc(sizeof(char) * (ft_strlen(s) + 1));
-	if (!str)
-		return (NULL);
-	while (s[i])
+	if (little[i] == 0)
+		return ((char *)big);
+	while (big && big[i] && i < len)
 	{
-		str[i] = s[i];
+		if (big[i] == little[0])
+		{
+			j = 0;
+			yes = 1;
+			while (little[j])
+			{
+				if ((big[i + j] != little[j]) || ((i + j) >= len))
+					yes = 0;
+				j++;
+			}
+			if (yes == 1)
+				return ((char *)(big + i));
+		}
 		i++;
 	}
-	str[i] = '\0';
-	return (str);
+	return (NULL);
 }

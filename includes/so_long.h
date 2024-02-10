@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 20:44:35 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/09 23:38:37 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/10 23:15:15 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,33 +24,37 @@
 
 }			t_matrix;*/
 
-typedef struct s_plgrd
+typedef struct s_game
 {
 	char	**map;
 	int		rows;
 	int		cols;
 
-}			t_plgrd;
+}			t_game;
 
 // main.c
 // main
-t_plgrd		*create_playground(int rows, char *file);
+int			check_input(int argc, char **argv);
+char		**create_map(int rows, char *file);
 char		**fill_map(char **newmap, int rows, int fd);
-int			count_rows(char *file);
-void		free_map(char **newmap, int rows);
+int			count_rows(t_game *game, char *file);
+void		free_map(char **map, int rows);
 void		error_msg(int k);
-void		init_plgrd(t_plgrd *plgrd, int rows, char **newmap);
 
 // check.c
-int			check_map(t_plgrd *plgrd);
-char		*check_cols(t_plgrd *plgrd);
-char		*check_vertical_wall(t_plgrd *plgrd);
-char		*check_horizontal_wall(t_plgrd *plgrd);
-char		*check_player(t_plgrd *plgrd);
-char		*check_exit(t_plgrd *plgrd);
-char		*check_collectible(t_plgrd *plgrd);
+int			check_map(t_game *game);
+int			check_map2(t_game *game);
+char		*check_rows(t_game *game);
+char		*check_cols(t_game *game);
+int			last_nl(char *str);
+char		*check_vertical_wall(t_game *game);
+char		*check_horizontal_wall(t_game *game);
+char		*check_player(t_game *game);
+char		*check_exit(t_game *game);
+char		*check_collectible(t_game *game);
+char		*check_other(t_game *game);
 
 //
-char		*ft_strdup(char *s);
+char		*ft_strnstr(const char *big, const char *little, int len);
 
 #endif
