@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 00:29:14 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/11 10:50:19 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/11 18:18:29 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,9 @@ int	check_map2(t_game *game)
 	msg = check_other(game);
 	if (msg)
 		return (write(2, msg, ft_strlen(msg)), 0);
+	msg = check_path(game);
+	if (msg)
+		return (write(2, msg, ft_strlen(msg)), 0);	
 	return (1);
 }
 
@@ -223,6 +226,33 @@ char	*check_other(t_game *game)
 	return (NULL);
 }
 
+char	*check_path(t_game *game)
+{
+	int		i;
+	int		j;	
+	t_point	point;
+
+	point = (t_point){0};
+	get_point((*game), &point, 'P');
+	flood_fill(game, point.i, point.j);
+	check_flood(game);
+	i = 0;
+	while (i < (*game).rows)
+	{
+		j = 0;
+		while (j < (*game).cols)
+		{
+			if ((*game).map[i][j] == 'C')
+				return ("Invalid map (no path to get all collectibles).\n");
+			if ((*game).map[i][j] == 'E')
+				return ("Invalid map (no path to get exit).\n");	
+			j++;
+		}
+		i++;
+	}
+	return (NULL);
+}
+
 void	flood_fill(t_game *game, int i, int j)
 {
 	(*game).map[i][j] = 'X';
@@ -234,7 +264,6 @@ void	flood_fill(t_game *game, int i, int j)
 		flood_fill(game, i, j + 1);
 	if ((*game).map[i][j - 1] != '1' && (*game).map[i][j - 1] != 'X')
 		flood_fill(game, i, j - 1);
-	
 }
 
 void	check_flood(t_game *game)
@@ -249,33 +278,43 @@ void	check_flood(t_game *game)
 	}
 }
 
-/*
-char	*check_path(t_game *game)
+void	get_point(t_game game, t_point *point, char c)
 {
-	// int	count;
-	// int	i;
-	// int	j;
-	count = 0;
-	while (i++ < (*game).rows)
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < game.rows)
 	{
-		while (j++ < (*game).cols)
+		j = 0;
+		while (j < game.cols)
 		{
-			if ((*game).map[i][j] == 'C')
-				count++;
+			if (game.map[i][j] == c)
+			{
+				(*point).i = i;
+				(*point).j = j;
+				// printf("%d\n", (*point).i);
+				// printf("%d\n", (*point).j);
+				return ;
+			}
+			j++;
 		}
+		i++;
 	}
-	if (count < 1)
-		return ("Invalid map (collectible missing).\n");
-	return (NULL);
+}
+
+/*
+t_point	*init_point(void)
+{
+	t_point	point;
+
+	point.i = 0;
+	point.j = 0;
+	return(&point);
 }
 */
 
 /*
-void	error_check(char *msg)
-{
-	write(2, msg, ft_strlen(msg));
-}
-
 int	nbr_rows(char **map)
 {
 	int	i;
