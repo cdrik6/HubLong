@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 20:44:35 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/10 23:15:15 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/11 02:06:27 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,6 @@
 # include "mlx.h"
 # include <stdio.h>
 
-/*typedef struct s_matrix
-{
-	int		rows;
-	int		cols;
-
-}			t_matrix;*/
-
 typedef struct s_game
 {
 	char	**map;
@@ -31,6 +24,13 @@ typedef struct s_game
 	int		cols;
 
 }			t_game;
+
+// typedef struct s_point
+// {
+// 	int		x;
+// 	int		y;
+
+// }			t_point;
 
 // main.c
 // main
@@ -53,6 +53,9 @@ char		*check_player(t_game *game);
 char		*check_exit(t_game *game);
 char		*check_collectible(t_game *game);
 char		*check_other(t_game *game);
+
+void		flood_fill(t_game *game, int i, int j);
+void		check_flood(t_game *game);
 
 //
 char		*ft_strnstr(const char *big, const char *little, int len);

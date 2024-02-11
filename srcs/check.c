@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 00:29:14 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/10 23:15:27 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/11 02:05:40 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,6 +221,32 @@ char	*check_other(t_game *game)
 		i++;
 	}
 	return (NULL);
+}
+
+void	flood_fill(t_game *game, int i, int j)
+{
+	(*game).map[i][j] = 'X';
+	if (i + 1 != '1')
+		flood_fill(game, i + 1, j);
+	if (i - 1 != '1')
+		flood_fill(game, i - 1, j);
+	if (j + 1 != '1')
+		flood_fill(game, i, j + 1);
+	if (j - 1 != '1')
+		flood_fill(game, i, j - 1);
+	check_flood(game);
+}
+
+void	check_flood(t_game *game)
+{
+	int	i;
+
+	i = 0;
+	while (i < (*game).rows)
+	{
+		printf("%s", (*game).map[i]);
+		i++;
+	}
 }
 
 /*
