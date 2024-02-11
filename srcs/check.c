@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 00:29:14 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/11 02:05:40 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/11 10:50:19 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,15 +226,15 @@ char	*check_other(t_game *game)
 void	flood_fill(t_game *game, int i, int j)
 {
 	(*game).map[i][j] = 'X';
-	if (i + 1 != '1')
+	if ((*game).map[i + 1][j] != '1' && (*game).map[i + 1][j] != 'X')
 		flood_fill(game, i + 1, j);
-	if (i - 1 != '1')
+	if ((*game).map[i - 1][j] != '1' && (*game).map[i - 1][j] != 'X')
 		flood_fill(game, i - 1, j);
-	if (j + 1 != '1')
+	if ((*game).map[i][j + 1] != '1' && (*game).map[i][j + 1] != 'X')
 		flood_fill(game, i, j + 1);
-	if (j - 1 != '1')
+	if ((*game).map[i][j - 1] != '1' && (*game).map[i][j - 1] != 'X')
 		flood_fill(game, i, j - 1);
-	check_flood(game);
+	
 }
 
 void	check_flood(t_game *game)

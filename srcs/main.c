@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 19:45:04 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/11 02:07:39 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/11 10:57:45 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ int	main(int argc, char **argv)
 	if (!game.map)
 		return (0);
 	check_map(&game);
-	flood_fill(&game, 1, 3);
+	flood_fill(&game, 3, 8);
+	check_flood(&game);
 	free_map(game.map, game.rows);
 }
 
