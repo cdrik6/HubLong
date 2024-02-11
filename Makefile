@@ -6,7 +6,7 @@
 #    By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/25 23:32:02 by caguillo          #+#    #+#              #
-#    Updated: 2024/02/11 22:13:04 by caguillo         ###   ########.fr        #
+#    Updated: 2024/02/12 00:04:30 by caguillo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,35 +33,25 @@ SRCS		=	./srcs/main.c \
 				./srcs/sort_4.c \
 				./srcs/sort_5.c			
 
-MLX_DIR	=	./minilibx-linux
-MLX		= 	$(MLX_DIR)/libmlx_Linux.a
+MLX_DIR		=	./minilibx-linux
+MLX			= 	$(MLX_DIR)/libmlx.a
+MLXLIB		= 	$(MLX) -lXext -lX11 -lm
 
-INCS_SRCS	=	./includes/so_long.h \
-				./includes/get_next_line.h
-INCS_DIR	=	./includes
-#INCS		=	-I $(INCS_DIR) -I $(MLX_DIR)
+INCS_SRCS	=	./includes/so_long.h
+INCS_DIR	=	-Iincludes -Iminilibx-linux
 
 CC			=	gcc
 CFLAGS		=	-Wall -Wextra -Werror
-MLXFLAGS	= 	-lmlx -lXext -lX11 -lm
-#MLXFLAGS	=	-Lmlx -lmlx -framework OpenGL -framework AppKit
-
-VALGRIND	= 	@valgrind --leak-check=full --show-leak-kinds=all \
-				--track-origins=yes --quiet --tool=memcheck --keep-debuginfo=yes
 
 OBJS		=	$(SRCS:.c=.o)
 #OBJS_BONUS	=	$(SRCS_BONUS:.c=.o)
 
-%.o:%.c
-			$(CC) $(CFLAGS) -Imlx -I $(INCS_DIR) -c $< -o $(<:.c=.o)
+%.o:%.c		$(INCS_SRCS)
+			$(CC) $(CFLAGS) $(INCS_DIR) -c $< -o $(<:.c=.o)
 
-$(NAME):	$(OBJS) $(INCS_SRCS)
+$(NAME):	$(OBJS)
 			make -C $(MLX_DIR)
-			mv $(MLX) .
-#			$(CC) $(CFLAGS) $(MLXFLAGS) $(OBJS) -I $(INCS_DIR) $(MLX_DIR) -o $(NAME)			
-			$(CC) $(CFLAGS) $(MLXFLAGS) $(OBJS) -I $(INCS_DIR) -L . -o $(NAME)
-#			$(CC) $(CFLAGS) $(MLXFLAGS) $(OBJS) -I $(INCS_DIR) -o $(NAME)
-			
+			$(CC) $(CFLAGS) $(OBJS) $(MLXLIB) -o $(NAME)
 			
 all:		$(NAME)
 
@@ -77,7 +67,7 @@ re: 		fclean all
 rebonus: 	fclean bonus
 			
 clean:
-#			make -C $(MLX_DIR) clean
+			make -C $(MLX_DIR) clean
 			rm -f $(OBJS)
 #			rm -f $(OBJS) $(OBJS_BONUS)
 
@@ -86,8 +76,5 @@ fclean: 	clean
 #			rm -f $(NAME) mlx.a	
 #			rm -f $(NAME) $(NAME_BONUS) libft.a	
 
-run:		${NAME}
-			${VALGRIND} ./${NAME}
-
-.PHONY: 	all clean fclean re valgrind run
+.PHONY: 	all clean fclean re 
 #.PHONY: 	all clean fclean re bonus rebonus
