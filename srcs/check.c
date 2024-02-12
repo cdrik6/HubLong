@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 00:29:14 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/11 18:18:29 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/12 18:01:45 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -271,6 +271,8 @@ void	check_flood(t_game *game)
 	int	i;
 
 	i = 0;
+	printf("%d\n", (*game).rows);
+	printf("%d\n", (*game).cols);
 	while (i < (*game).rows)
 	{
 		printf("%s", (*game).map[i]);

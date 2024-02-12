@@ -6,7 +6,7 @@
 #    By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/25 23:32:02 by caguillo          #+#    #+#              #
-#    Updated: 2024/02/12 00:04:30 by caguillo         ###   ########.fr        #
+#    Updated: 2024/02/12 17:58:08 by caguillo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,9 @@ INCS_DIR	=	-Iincludes -Iminilibx-linux
 CC			=	gcc
 CFLAGS		=	-Wall -Wextra -Werror
 
+VALGRIND	= valgrind --leak-check=full --show-leak-kinds=all \
+			--track-origins=yes --quiet --tool=memcheck --keep-debuginfo=yes
+
 OBJS		=	$(SRCS:.c=.o)
 #OBJS_BONUS	=	$(SRCS_BONUS:.c=.o)
 
@@ -76,5 +79,8 @@ fclean: 	clean
 #			rm -f $(NAME) mlx.a	
 #			rm -f $(NAME) $(NAME_BONUS) libft.a	
 
-.PHONY: 	all clean fclean re 
+run:		$(NAME)
+				$(VALGRIND) ./$(NAME) maps/map1.ber
+
+.PHONY: 	all clean fclean re run
 #.PHONY: 	all clean fclean re bonus rebonus

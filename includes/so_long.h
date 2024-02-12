@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 20:44:35 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/11 23:54:56 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/12 22:55:07 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct s_game
 	int		cols;
 	void	*mlx;
 	void	*mlx_win;
+	int		color;	
 }			t_game;
 
 typedef struct s_point
@@ -65,6 +66,6 @@ void		get_point(t_game game, t_point *point, char c);
 char		*ft_strnstr(const char *big, const char *little, int len);
 
 // mlx.c
-void		init_mlx(t_game *game);
+int			init_mlx(t_game *game);
 
 #endif

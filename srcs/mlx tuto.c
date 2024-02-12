@@ -1,17 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mlx.c                                              :+:      :+:    :+:   */
+/*   mlx tuto.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 20:00:45 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/12 22:56:15 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/12 22:54:55 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
+typedef struct s_data
+{
+	void	*img;
+	char	*addr;
+	int		bpp;
+	int		line_len;
+	int		endian;
+}			t_data;
+
+typedef unsigned char	byte;
+
+void					my_mlx_pixel_put(t_data *data, int x, int y, int color);
+int						handle_input(int keysym, t_game *game);
+// int			change_color(t_game *game);
+void					color_screen(t_game *game, int color);
+int						encode_rgb(byte red, byte green, byte blue);
+int						f(int keysym, t_game *game);
 
 int	init_mlx(t_game *game)
 {
