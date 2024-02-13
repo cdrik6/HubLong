@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 00:29:14 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/12 18:01:45 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/13 23:31:45 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	check_map2(t_game *game)
 		return (write(2, msg, ft_strlen(msg)), 0);
 	msg = check_path(game);
 	if (msg)
-		return (write(2, msg, ft_strlen(msg)), 0);	
+		return (write(2, msg, ft_strlen(msg)), 0);
 	return (1);
 }
 
@@ -142,7 +142,11 @@ char	*check_player(t_game *game)
 		while (j < (*game).cols)
 		{
 			if ((*game).map[i][j] == 'P')
+			{
 				count++;
+				(*game).player.i = i;
+				(*game).player.j = j;
+			}
 			j++;
 		}
 		i++;
@@ -152,6 +156,7 @@ char	*check_player(t_game *game)
 	if (count < 1)
 		return ("Invalid map (player missing).\n");
 	return (NULL);
+	/**************************************************************/
 }
 
 char	*check_exit(t_game *game)
@@ -168,7 +173,11 @@ char	*check_exit(t_game *game)
 		while (j < (*game).cols)
 		{
 			if ((*game).map[i][j] == 'E')
+			{
 				count++;
+				(*game).exit.i = i;
+				(*game).exit.j = j;
+			}
 			j++;
 		}
 		i++;
@@ -177,7 +186,9 @@ char	*check_exit(t_game *game)
 		return ("Invalid map (too many exits).\n");
 	else if (count < 1)
 		return ("Invalid map (exit missing).\n");
+	(*game).closed = 1;
 	return (NULL);
+	/**************************************************************/
 }
 
 char	*check_collectible(t_game *game)
@@ -201,6 +212,7 @@ char	*check_collectible(t_game *game)
 	}
 	if (count < 1)
 		return ("Invalid map (collectible missing).\n");
+	(*game).nbr_c = count;
 	return (NULL);
 }
 
@@ -228,14 +240,14 @@ char	*check_other(t_game *game)
 
 char	*check_path(t_game *game)
 {
-	int		i;
-	int		j;	
-	t_point	point;
+	int	i;
+	int	j;
 
-	point = (t_point){0};
-	get_point((*game), &point, 'P');
-	flood_fill(game, point.i, point.j);
-	check_flood(game);
+	// t_point	point;
+	// point = (t_point){0};
+	// get_point((*game), &point, 'P');
+	flood_fill(game, (*game).player.i, (*game).player.i);
+	check_flood(game); /****************************************************/
 	i = 0;
 	while (i < (*game).rows)
 	{
@@ -245,25 +257,57 @@ char	*check_path(t_game *game)
 			if ((*game).map[i][j] == 'C')
 				return ("Invalid map (no path to get all collectibles).\n");
 			if ((*game).map[i][j] == 'E')
-				return ("Invalid map (no path to get exit).\n");	
+				return ("Invalid map (no path to get exit).\n");
 			j++;
 		}
 		i++;
 	}
+	back_flood(game);
+	check_flood(game); /****************************************************/
 	return (NULL);
 }
 
 void	flood_fill(t_game *game, int i, int j)
 {
-	(*game).map[i][j] = 'X';
-	if ((*game).map[i + 1][j] != '1' && (*game).map[i + 1][j] != 'X')
+	if ((*game).map[i][j] == 'C')
+		(*game).map[i][j] = 'D';
+	else
+		(*game).map[i][j] = 'X';
+	if ((*game).map[i + 1][j] != '1' && (*game).map[i + 1][j] != 'X'
+		&& (*game).map[i + 1][j] != 'D')
 		flood_fill(game, i + 1, j);
-	if ((*game).map[i - 1][j] != '1' && (*game).map[i - 1][j] != 'X')
+	if ((*game).map[i - 1][j] != '1' && (*game).map[i - 1][j] != 'X'
+		&& (*game).map[i - 1][j] != 'D')
 		flood_fill(game, i - 1, j);
-	if ((*game).map[i][j + 1] != '1' && (*game).map[i][j + 1] != 'X')
+	if ((*game).map[i][j + 1] != '1' && (*game).map[i][j + 1] != 'X'
+		&& (*game).map[i][j + 1] != 'D')
 		flood_fill(game, i, j + 1);
-	if ((*game).map[i][j - 1] != '1' && (*game).map[i][j - 1] != 'X')
+	if ((*game).map[i][j - 1] != '1' && (*game).map[i][j - 1] != 'X'
+		&& (*game).map[i][j - 1] != 'D')
 		flood_fill(game, i, j - 1);
+}
+
+void	back_flood(t_game *game)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < (*game).rows)
+	{
+		j = 0;
+		while (j < (*game).cols)
+		{
+			if ((*game).map[i][j] == 'D')
+				(*game).map[i][j] == 'C';
+			if ((*game).map[i][j] == 'X')
+				(*game).map[i][j] == '0';
+			j++;
+		}
+		i++;
+	}
+	(*game).map[(*game).player.i][(*game).player.j] = 'P';
+	(*game).map[(*game).exit.i][(*game).exit.j] = 'E';
 }
 
 void	check_flood(t_game *game)
@@ -280,6 +324,7 @@ void	check_flood(t_game *game)
 	}
 }
 
+/*
 void	get_point(t_game game, t_point *point, char c)
 {
 	int	i;
@@ -304,7 +349,7 @@ void	get_point(t_game game, t_point *point, char c)
 		i++;
 	}
 }
-
+*/
 /*
 t_point	*init_point(void)
 {

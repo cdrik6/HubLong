@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 19:45:04 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/12 18:24:40 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/13 17:25:55 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	main(int argc, char **argv)
 		return (0);
 	check_map(&game);
 	init_mlx(&game);
+	
 	free_map(game.map, game.rows);
 }
 
