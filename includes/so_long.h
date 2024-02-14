@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 20:44:35 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/14 03:03:24 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/14 20:18:56 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,22 @@
 # define IMG_W 32
 # define IMG_H 32
 
-# define KEY_W 119
-# define KEY_A 97
-# define KEY_S 115
-# define KEY_D 100
+# define KEY_w 119
+# define KEY_a 97
+# define KEY_s 115
+# define KEY_d 100
 # define KEY_UP 65362
 # define KEY_LEFT 65361
 # define KEY_RIGHT 65363
 # define KEY_DOWN 65364
-# define KEY_Q 113
+# define KEY_q 113
 # define KEY_ESC 65307
 
 # define WALL "images/wall.xpm"
 # define FLOOR "images/floor.xpm"
-# define COIN "images/coin.xpm"
-# define P_FRONT "images/front.xpm"
-# define P_BACK "images/back.xpm"
+# define COLL "images/coll.xpm"
+# define P_UP "images/up.xpm"
+# define P_DOWN "images/down.xpm"
 # define P_LEFT "images/left.xpm"
 # define P_RIGHT "images/right.xpm"
 # define EXIT0 "images/exit0.xpm"
@@ -77,11 +77,14 @@ typedef struct s_game
 	t_img	imgC;
 	t_img	imgE0;
 	t_img	imgE1;
-	t_img	imgPf;
-	t_img	imgPb;
+	t_img	imgPu;
+	t_img	imgPd;
 	t_img	imgPl;
 	t_img	imgPr;
-
+	void	*P_img;
+	void	*E_img;
+	void	*C_img;
+	void	*F_img;
 }			t_game;
 
 // main.c
@@ -120,5 +123,7 @@ void		draw_map(t_game *game);
 void		load_image(t_game *game);
 void		select_image(t_game *game, int i, int j);
 void		free_game(t_game *game);
+int			handle_input(int keysym, t_game *game);
+void		destroy_image(t_game *game);
 
 #endif
