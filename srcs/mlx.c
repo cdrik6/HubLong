@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 20:00:45 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/13 23:57:15 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/14 03:10:31 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,18 @@ int	init_mlx(t_game *game)
 		free_game(game);
 		return (0);
 	}
+	load_image(game);
+	printf("la\n");
+	draw_map(game);
+	// printf("ici\n");
 	// mlx_key_hook((*game).mlx_win, handle_input, game);
-	// mlx_key_hook((*game).mlx_win, f, game);
 	// mlx_loop_hook((*game).mlx, change_color, game);
 	//
-	(*game).img.img = mlx_new_image((*game).mlx, 400, 400);
-	(*game).img.addr = mlx_get_data_addr((*game).img.img, &(*game).img.bpp,
-			&(*game).img.line_len, &(*game).img.endian);
+	// (*game).img.img = mlx_new_image((*game).mlx, 400, 400);
+	// (*game).img.addr = mlx_get_data_addr((*game).img.img, &(*game).img.bpp,
+	// 		&(*game).img.line_len, &(*game).img.endian);
 	//
-	mlx_key_hook((*game).mlx_win, f, game);
+	// mlx_key_hook((*game).mlx_win, f, game);
 	mlx_loop((*game).mlx);
 	return (0);
 }
@@ -54,12 +57,13 @@ void	draw_map(t_game *game)
 	int	j;
 
 	i = 0;
-	while (i < (*game).cols)
+	while (i < (*game).rows)
 	{
 		j = 0;
 		while (j < (*game).cols)
 		{
-			select_image(game, i, j);
+			printf("i%d / i%d\n", i, j);
+			select_image(game, j, i);
 			j++;
 		}
 		i++;
@@ -93,15 +97,25 @@ void	select_image(t_game *game, int i, int j)
 {
 	if ((*game).map[i][j] == '1')
 		mlx_put_image_to_window((*game).mlx, (*game).mlx_win, (*game).img1.xpm,
-			i, j);
+			i * IMG_W, j * IMG_H);
 	if ((*game).map[i][j] == '0')
 		mlx_put_image_to_window((*game).mlx, (*game).mlx_win, (*game).img0.xpm,
-			i, j);
+			i * IMG_W, j * IMG_H);
 	if ((*game).map[i][j] == 'C')
 		mlx_put_image_to_window((*game).mlx, (*game).mlx_win, (*game).imgC.xpm,
-			i, j);
+			i * IMG_W, j * IMG_H);
+	if ((*game).map[i][j] == 'E' && (*game).nbr_c != 0)
+		mlx_put_image_to_window((*game).mlx, (*game).mlx_win, (*game).imgE1.xpm,
+			i * IMG_W, j * IMG_H);
+	if ((*game).map[i][j] == 'E' && (*game).nbr_c == 0)
+		mlx_put_image_to_window((*game).mlx, (*game).mlx_win, (*game).imgE0.xpm,
+			i * IMG_W, j * IMG_H);
+	if ((*game).map[i][j] == 'P')
+		mlx_put_image_to_window((*game).mlx, (*game).mlx_win, (*game).imgPf.xpm,
+			i * IMG_W, j * IMG_H);
 }
 
+/*
 void	color_screen(t_game *game, int color)
 {
 	for (int y = 0; y < 400; ++y)
@@ -157,6 +171,7 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	dst = (*data).addr + (y * (*data).line_len + x * ((*data).bpp / 8));
 	*(unsigned int *)dst = color;
 }
+*/
 
 /*
 int	change_color(t_game *game)

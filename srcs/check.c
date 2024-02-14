@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 00:29:14 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/13 23:31:45 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/14 02:45:54 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,8 +185,7 @@ char	*check_exit(t_game *game)
 	if (count > 1)
 		return ("Invalid map (too many exits).\n");
 	else if (count < 1)
-		return ("Invalid map (exit missing).\n");
-	(*game).closed = 1;
+		return ("Invalid map (exit missing).\n");	
 	return (NULL);
 	/**************************************************************/
 }
@@ -299,9 +298,9 @@ void	back_flood(t_game *game)
 		while (j < (*game).cols)
 		{
 			if ((*game).map[i][j] == 'D')
-				(*game).map[i][j] == 'C';
+				(*game).map[i][j] = 'C';
 			if ((*game).map[i][j] == 'X')
-				(*game).map[i][j] == '0';
+				(*game).map[i][j] = '0';
 			j++;
 		}
 		i++;

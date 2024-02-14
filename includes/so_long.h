@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 20:44:35 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/13 23:33:02 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/14 03:03:24 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,30 @@
 # define KEY_Q 113
 # define KEY_ESC 65307
 
-# define WALL "../images/wall.xpm"
-# define FLOOR "../images/floor.xpm"
-# define COIN "../images/coin.xpm"
-# define P_FRONT "../images/front.xpm"
-# define P_BACK "../images/back.xpm"
-# define P_LEFT "../images/left.xpm"
-# define P_RIGHT "../images/right.xpm"
-# define EXIT0 "../images/exit0.xpm"
-# define EXIT1 "../images/exit1.xpm"
+# define WALL "images/wall.xpm"
+# define FLOOR "images/floor.xpm"
+# define COIN "images/coin.xpm"
+# define P_FRONT "images/front.xpm"
+# define P_BACK "images/back.xpm"
+# define P_LEFT "images/left.xpm"
+# define P_RIGHT "images/right.xpm"
+# define EXIT0 "images/exit0.xpm"
+# define EXIT1 "images/exit1.xpm"
+
+typedef struct s_img
+{
+	void	*xpm;
+	int		w;
+	int		h;
+
+}			t_img;
+
+typedef struct s_point
+{
+	int		i;
+	int		j;
+
+}			t_point;
 
 typedef struct s_game
 {
@@ -53,7 +68,6 @@ typedef struct s_game
 	t_point	player;
 	t_point	exit;
 	int		nbr_c;
-	int		closed;
 	// mlx
 	void	*mlx;
 	void	*mlx_win;
@@ -69,21 +83,6 @@ typedef struct s_game
 	t_img	imgPr;
 
 }			t_game;
-
-typedef struct s_point
-{
-	int		i;
-	int		j;
-
-}			t_point;
-
-typedef struct s_img
-{
-	void	*xpm;
-	int		w;
-	int		h;
-
-}			t_img;
 
 // main.c
 // main
@@ -110,12 +109,16 @@ char		*check_path(t_game *game);
 void		flood_fill(t_game *game, int i, int j);
 void		check_flood(t_game *game);
 void		back_flood(t_game *game);
-//void		get_point(t_game game, t_point *point, char c);
+// void		get_point(t_game game, t_point *point, char c);
 // t_point		*init_point(void);
 //
 char		*ft_strnstr(const char *big, const char *little, int len);
 
 // mlx.c
 int			init_mlx(t_game *game);
+void		draw_map(t_game *game);
+void		load_image(t_game *game);
+void		select_image(t_game *game, int i, int j);
+void		free_game(t_game *game);
 
 #endif
