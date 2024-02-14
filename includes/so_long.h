@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 20:44:35 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/14 20:18:56 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/15 00:26:38 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,19 @@
 # define IMG_W 32
 # define IMG_H 32
 
-# define KEY_w 119
-# define KEY_a 97
-# define KEY_s 115
-# define KEY_d 100
+# define KEY_W 119
+# define KEY_A 97
+# define KEY_S 115
+# define KEY_D 100
+// # define KEY_2 65433
+// # define KEY_4 65430
+// # define KEY_6 65432
+// # define KEY_8 65431
 # define KEY_UP 65362
 # define KEY_LEFT 65361
 # define KEY_RIGHT 65363
 # define KEY_DOWN 65364
-# define KEY_q 113
+# define KEY_Q 113
 # define KEY_ESC 65307
 
 # define WALL "images/wall.xpm"
@@ -68,6 +72,7 @@ typedef struct s_game
 	t_point	player;
 	t_point	exit;
 	int		nbr_c;
+	int		open;
 	// mlx
 	void	*mlx;
 	void	*mlx_win;
@@ -81,10 +86,10 @@ typedef struct s_game
 	t_img	imgPd;
 	t_img	imgPl;
 	t_img	imgPr;
-	void	*P_img;
-	void	*E_img;
-	void	*C_img;
-	void	*F_img;
+	// void	*P_img;
+	// void	*E_img;
+	// void	*C_img;
+	// void	*F_img;
 }			t_game;
 
 // main.c
@@ -119,11 +124,14 @@ char		*ft_strnstr(const char *big, const char *little, int len);
 
 // mlx.c
 int			init_mlx(t_game *game);
-void		draw_map(t_game *game);
+void		draw_init_map(t_game *game);
 void		load_image(t_game *game);
-void		select_image(t_game *game, int i, int j);
+void		init_image_on_map(t_game *game, int i, int j);
 void		free_game(t_game *game);
 int			handle_input(int keysym, t_game *game);
 void		destroy_image(t_game *game);
 
+void		replace_image(t_game *game, int i, int j, void *xpm);
+void		move(t_game *game, int k, int m, void *xpm);
+int			cross_close(t_game *game);
 #endif
