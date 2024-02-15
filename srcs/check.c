@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 00:29:14 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/14 02:45:54 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/15 18:35:38 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,7 @@ char	*check_exit(t_game *game)
 	else if (count < 1)
 		return ("Invalid map (exit missing).\n");	
 	return (NULL);
+	(*game).open = 0;
 	/**************************************************************/
 }
 
@@ -211,7 +212,7 @@ char	*check_collectible(t_game *game)
 	}
 	if (count < 1)
 		return ("Invalid map (collectible missing).\n");
-	(*game).nbr_c = count;
+	(*game).nbr_c = count;	
 	return (NULL);
 }
 

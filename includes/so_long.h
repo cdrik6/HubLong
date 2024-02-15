@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 20:44:35 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/15 00:26:38 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/15 19:53:37 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,16 @@
 
 # define WALL "images/wall.xpm"
 # define FLOOR "images/floor.xpm"
-# define COLL "images/coll.xpm"
 # define P_UP "images/up.xpm"
 # define P_DOWN "images/down.xpm"
 # define P_LEFT "images/left.xpm"
 # define P_RIGHT "images/right.xpm"
 # define EXIT0 "images/exit0.xpm"
 # define EXIT1 "images/exit1.xpm"
+# define C00 "images/c00.xpm"
+# define C01 "images/c01.xpm"
+# define C02 "images/c02.xpm"
+# define C03 "images/c03.xpm"
 
 typedef struct s_img
 {
@@ -79,7 +82,10 @@ typedef struct s_game
 	// images
 	t_img	img1;
 	t_img	img0;
-	t_img	imgC;
+	t_img	imgC00;
+	t_img	imgC01;
+	t_img	imgC02;
+	t_img	imgC03;
 	t_img	imgE0;
 	t_img	imgE1;
 	t_img	imgPu;
@@ -127,6 +133,7 @@ int			init_mlx(t_game *game);
 void		draw_init_map(t_game *game);
 void		load_image(t_game *game);
 void		init_image_on_map(t_game *game, int i, int j);
+void		init_C_image_on_map(t_game *game, int i, int j);
 void		free_game(t_game *game);
 int			handle_input(int keysym, t_game *game);
 void		destroy_image(t_game *game);
@@ -134,4 +141,7 @@ void		destroy_image(t_game *game);
 void		replace_image(t_game *game, int i, int j, void *xpm);
 void		move(t_game *game, int k, int m, void *xpm);
 int			cross_close(t_game *game);
+void		open_exit(t_game *game);
+void		game_win(t_game *game);
+
 #endif
