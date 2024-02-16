@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 19:45:04 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/15 18:50:10 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/16 22:07:53 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ int	main(int argc, char **argv)
 	game.map = create_map(game.rows, argv[1]);
 	if (!game.map)
 		return (0);
-	if (check_map(&game) == 1)
-	{
-		init_mlx(&game);
-		// if (init_mlx(&game) == 0)
-		// 	return (free_map(game.map, game.rows), 0); /******** msg error mlx*/
-	}
-	free_map(game.map, game.rows);
+	if (check_map(&game) == 0)
+		return (free_map(game.map, game.rows), 0);
+	if (init_mlx(&game) == 0)
+		return (free_map(game.map, game.rows), 0);
+	// if (init_mlx(&game) == 0)
+	// 	return (free_map(game.map, game.rows), 0); /******** msg error mlx*/
+	return (0);
 }
 
 int	check_input(int argc, char **argv)
@@ -130,54 +130,22 @@ void	free_map(char **map, int rows)
 
 void	error_msg(int k)
 {
-	char	*msg;
-
-	msg = "Error\nEmpty file.\n";
 	if (k == 0)
-		write(2, msg, ft_strlen(msg));
-	msg = "Error\nCan't malloc the map.\n";
+		ft_putstr_fd("Error\nEmpty file.\n", 2);
 	if (k == 1)
-		write(2, msg, ft_strlen(msg));
-	msg = "Error\nCan't open the file.\n";
+		ft_putstr_fd("Error\nCan't malloc the map.\n", 2);
 	if (k == 2)
-		write(2, msg, ft_strlen(msg));
-	msg = "Error\nToo many arguments.\n";
+		ft_putstr_fd("Error\nCan't open the file.\n", 2);
 	if (k == 3)
-		write(2, msg, ft_strlen(msg));
-	msg = "Error\nMap file (.ber) is missing.\n";
+		ft_putstr_fd("Error\nToo many arguments.\n", 2);
 	if (k == 4)
-		write(2, msg, ft_strlen(msg));
-	msg = "Error\nMap should be a \".ber\" file.\n";
+		ft_putstr_fd("Error\nMap file (.ber) is missing.\n", 2);
 	if (k == 5)
-		write(2, msg, ft_strlen(msg));
+		ft_putstr_fd("Error\nMap should be a \".ber\" file.\n", 2);
+	if (k == 6)
+		ft_putstr_fd("Error\nCan't initialize the MLX.\n", 2);
+	if (k == 7)
+		ft_putstr_fd("Error\nInvalid map (too big for the screen).\n", 2);
+	if (k == 8)
+		ft_putstr_fd("Error\nMLX can't generate the window.\n", 2);
 }
-
-// printf("rows main %d\n", (*game).rows);
-
-// void	init_game(t_game *game, int rows)
-// {
-// 	int	i;
-
-// 	// t_game	*game;
-// 	//(*game).map = map;
-// 	(*game).rows = rows;
-// 	(*game).cols = 0;
-// 	printf("rows %d\n", (*game).rows);
-// 	i = 0;
-// 	while ((*game).map[i])
-// 	{
-// 		printf("%s", (*game).map[i]);
-// 		i++;
-// 	}
-// 	// 	printf("%s", map[0]);
-// 	//
-// 	/*
-// 	while (newmap[i])
-// 	{
-// 		(*plgrd).map[i] = ft_strdup(newmap[i]);
-// 		i++;
-// 	}
-// 	(*plgrd).map[i] = NULL;
-// 	*/
-// 	// return (game);
-// }

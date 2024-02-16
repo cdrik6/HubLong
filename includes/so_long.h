@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 20:44:35 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/16 19:52:14 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/17 00:22:29 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ typedef struct s_game
 	t_img	imgPd;
 	t_img	imgPl;
 	t_img	imgPr;
-
+	void	*tab_img[12];
 }			t_game;
 
 // main.c
@@ -132,16 +132,20 @@ void		ft_putstr_fd(char *s, int fd);
 size_t		len_nbr(int n);
 char		*fill_nbr(char *nbr, size_t size, int n);
 char		*ft_itoa(int n);
+char		*lib_strjoin(char *s1, char *s2);
 
 // mlx.c
 int			init_mlx(t_game *game);
 void		draw_init_map(t_game *game);
 void		load_image(t_game *game);
+void		load_tab_image(t_game *game);
+void		check_tab_image(t_game *game);
 void		init_image_on_map(t_game *game, int i, int j);
 void		init_C_image_on_map(t_game *game, int i, int j);
 void		free_game(t_game *game);
 int			handle_input(int keysym, t_game *game);
 void		destroy_image(t_game *game);
+void		free_game(t_game *game);
 
 void		replace_image(t_game *game, int i, int j, void *xpm);
 void		move(t_game *game, int k, int m, void *xpm);

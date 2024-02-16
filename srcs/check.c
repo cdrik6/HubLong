@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 00:29:14 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/15 23:15:27 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/16 21:44:12 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,11 +244,8 @@ char	*check_path(t_game *game)
 	int	i;
 	int	j;
 
-	// t_point	point;
-	// point = (t_point){0};
-	// get_point((*game), &point, 'P');
 	flood_fill(game, (*game).player.i, (*game).player.i);
-	check_flood(game); /****************************************************/
+	// check_flood(game); /****************************************************/
 	i = 0;
 	while (i < (*game).rows)
 	{
@@ -264,7 +261,7 @@ char	*check_path(t_game *game)
 		i++;
 	}
 	back_flood(game);
-	check_flood(game); /****************************************************/
+	// check_flood(game); /****************************************************/
 	return (NULL);
 }
 

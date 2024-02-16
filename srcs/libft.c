@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 21:52:17 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/16 19:53:03 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/16 20:25:23 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,4 +139,33 @@ size_t	len_nbr(int n)
 		n = n / 10;
 	}
 	return (size);
+}
+
+char	*lib_strjoin(char *s1, char *s2)
+{
+	size_t	i;
+	size_t	len1;
+	size_t	len2;
+	char	*join;
+
+	if (!s1 || !s2)
+		return (NULL);
+	len1 = ft_strlen(s1);
+	len2 = ft_strlen(s2);
+	join = malloc(sizeof(char) * (len1 + len2 + 1));
+	if (!join)
+		return (NULL);
+	i = 0;
+	while (i < len1)
+	{
+		join[i] = s1[i];
+		i++;
+	}
+	while (i < len1 + len2)
+	{
+		join[i] = s2[i - len1];
+		i++;
+	}
+	join[i] = '\0';
+	return (join);
 }
