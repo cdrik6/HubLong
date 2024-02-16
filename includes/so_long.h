@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 20:44:35 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/16 00:41:49 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/16 19:52:14 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,9 @@ void		back_flood(t_game *game);
 char		*ft_strnstr(const char *big, const char *little, int len);
 void		ft_putnbr_fd(int n, int fd);
 void		ft_putstr_fd(char *s, int fd);
+size_t		len_nbr(int n);
+char		*fill_nbr(char *nbr, size_t size, int n);
+char		*ft_itoa(int n);
 
 // mlx.c
 int			init_mlx(t_game *game);
@@ -146,5 +149,6 @@ int			x_close(t_game *game);
 void		open_exit(t_game *game);
 void		game_win(t_game *game);
 int			check_size_map(t_game *game);
+void		print_mvt(t_game *game);
 
 #endif

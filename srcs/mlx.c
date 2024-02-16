@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 20:00:45 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/16 01:22:00 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/16 20:00:07 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	init_mlx(t_game *game)
 		load_image(game);
 		draw_init_map(game);
 		(*game).mvt = 0;
+		print_mvt(game);
 		mlx_hook((*game).mlx_win, KeyPress, KeyPressMask, handle_input, game);
 		mlx_hook((*game).mlx_win, DestroyNotify, NoEventMask, x_close, game);
 		mlx_loop((*game).mlx);
@@ -206,6 +207,7 @@ void	move(t_game *game, int k, int m, void *xpm)
 		(*game).player.i = i;
 		(*game).player.j = j;
 		(*game).mvt++;
+		print_mvt(game);
 		game_win(game);
 	}
 	else if ((*game).map[i][j] != '1' && (*game).map[i][j] != 'E')
@@ -215,6 +217,7 @@ void	move(t_game *game, int k, int m, void *xpm)
 		(*game).player.i = i;
 		(*game).player.j = j;
 		(*game).mvt++;
+		print_mvt(game);
 		(*game).map[(*game).player.i][(*game).player.j] = 'P';
 		replace_image(game, (*game).player.i, (*game).player.j, xpm);
 	}
@@ -228,7 +231,6 @@ void	open_exit(t_game *game)
 	if ((*game).nbr_c == 0)
 	{
 		(*game).open = 1;
-		//(*game).imgE1.xpm = (*game).imgE0.xpm;
 		mlx_put_image_to_window((*game).mlx, (*game).mlx_win, (*game).imgE0.xpm,
 			(*game).exit.j * IMG_W, (*game).exit.i * IMG_H);
 	}
@@ -253,15 +255,15 @@ void	replace_image(t_game *game, int i, int j, void *xpm)
 			* IMG_H);
 }
 
-void	print_mvt(void *mlx_ptr, void *win_ptr, int x, int y, char *str)
+void	print_mvt(t_game *game)
 {
-	int	i;
+	char	*str;
 
-	i = 0;
-	while (str[i])
-	{
-		mlx_string_put(mlx_ptr, win_ptr, x, y, 0xFFFFFF, &text[i]);
-		x += 10; // Increment x to position next character horizontally
-		i++;
-	}
+	str = ft_itoa((*game).mvt);
+	mlx_string_put((*game).mlx, (*game).mlx_win, 0, IMG_H / 2, 0xFFFFFF,
+		"Movements:");
+	replace_image(game, 3, 0,(*game).img1.xpm );
+	
+	mlx_string_put((*game).mlx, (*game).mlx_win, IMG_W * 2, IMG_H / 2, 0xFFFFFF, str);
+	free(str);
 }
