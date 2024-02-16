@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 20:44:35 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/15 19:53:37 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/16 00:41:49 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,12 @@ typedef struct s_game
 	char	**map;
 	int		rows;
 	int		cols;
-	//
+	// utils
 	t_point	player;
 	t_point	exit;
 	int		nbr_c;
 	int		open;
+	int		mvt;
 	// mlx
 	void	*mlx;
 	void	*mlx_win;
@@ -86,16 +87,14 @@ typedef struct s_game
 	t_img	imgC01;
 	t_img	imgC02;
 	t_img	imgC03;
+	int		temp_c;
 	t_img	imgE0;
 	t_img	imgE1;
 	t_img	imgPu;
 	t_img	imgPd;
 	t_img	imgPl;
 	t_img	imgPr;
-	// void	*P_img;
-	// void	*E_img;
-	// void	*C_img;
-	// void	*F_img;
+
 }			t_game;
 
 // main.c
@@ -125,8 +124,11 @@ void		check_flood(t_game *game);
 void		back_flood(t_game *game);
 // void		get_point(t_game game, t_point *point, char c);
 // t_point		*init_point(void);
-//
+
+// libft
 char		*ft_strnstr(const char *big, const char *little, int len);
+void		ft_putnbr_fd(int n, int fd);
+void		ft_putstr_fd(char *s, int fd);
 
 // mlx.c
 int			init_mlx(t_game *game);
@@ -140,8 +142,9 @@ void		destroy_image(t_game *game);
 
 void		replace_image(t_game *game, int i, int j, void *xpm);
 void		move(t_game *game, int k, int m, void *xpm);
-int			cross_close(t_game *game);
+int			x_close(t_game *game);
 void		open_exit(t_game *game);
 void		game_win(t_game *game);
+int			check_size_map(t_game *game);
 
 #endif

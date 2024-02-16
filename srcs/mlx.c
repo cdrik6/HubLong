@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 20:00:45 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/15 19:56:31 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/16 01:22:00 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,28 +19,43 @@ int	init_mlx(t_game *game)
 	(*game).mlx = mlx_init();
 	if ((*game).mlx == NULL)
 		return (0); /************/
-	(*game).mlx_win = mlx_new_window((*game).mlx, (*game).cols * IMG_W,
-			(*game).rows * IMG_H, "So Long");
-	if ((*game).mlx_win == NULL)
+	if (check_size_map(game) == 1)
 	{
-		free_game(game);
-		return (0); /***************/
+		(*game).mlx_win = mlx_new_window((*game).mlx, (*game).cols * IMG_W,
+				(*game).rows * IMG_H, "So Long");
+		if ((*game).mlx_win == NULL)
+		{
+			free_game(game);
+			return (0); /***************/
+		}
+		load_image(game);
+		draw_init_map(game);
+		(*game).mvt = 0;
+		mlx_hook((*game).mlx_win, KeyPress, KeyPressMask, handle_input, game);
+		mlx_hook((*game).mlx_win, DestroyNotify, NoEventMask, x_close, game);
+		mlx_loop((*game).mlx);
 	}
-	load_image(game);
-	draw_init_map(game);
-	// mlx_key_hook((*game).mlx_win, handle_input, game);
-	// mlx_hook((*game).mlx_win, 2, 1L<<0, handle_input, game);
-	mlx_hook((*game).mlx_win, KeyPress, KeyPressMask, handle_input, game);
-	mlx_hook((*game).mlx_win, DestroyNotify, NoEventMask, cross_close, game);
-	// 17 0
-	// mlx_loop_hook((*game).mlx, change_color, game);
-	//
-	// (*game).img.img = mlx_new_image((*game).mlx, 400, 400);
-	// (*game).img.addr = mlx_get_data_addr((*game).img.img, &(*game).img.bpp,
-	// 		&(*game).img.line_len, &(*game).img.endian);
-	//
-	// mlx_key_hook((*game).mlx_win, f, game);
-	mlx_loop((*game).mlx);
+	return (1);
+}
+
+int	check_size_map(t_game *game)
+{
+	int		screen_width;
+	int		screen_height;
+	char	*msg;
+
+	msg = NULL;
+	mlx_get_screen_size((*game).mlx, &screen_width, &screen_height);
+	if ((*game).cols * IMG_W > screen_width || (*game).rows
+		* IMG_H > screen_height)
+	{
+		msg = "Invalid map (too big for the screen).\n";
+		mlx_destroy_display((*game).mlx);
+		free((*game).mlx);
+		free_map((*game).map, (*game).rows);
+		write(2, msg, ft_strlen(msg));
+		exit(0);
+	}
 	return (1);
 }
 
@@ -123,30 +138,25 @@ void	init_image_on_map(t_game *game, int i, int j)
 	if ((*game).map[i][j] == 'P')
 		mlx_put_image_to_window((*game).mlx, (*game).mlx_win, (*game).imgPu.xpm,
 			j * IMG_W, i * IMG_H);
-	init_C_image_on_map(game, i, j);
+	if ((*game).map[i][j] == 'C')
+		init_C_image_on_map(game, i, j);
 }
 
 void	init_C_image_on_map(t_game *game, int i, int j)
 {
-	int	temp;
-
-	temp = (*game).nbr_c;
-	while (temp > 0)
-	{
-		if ((*game).map[i][j] == 'C' && temp == 1 % 4)
-			mlx_put_image_to_window((*game).mlx, (*game).mlx_win,
-				(*game).imgC01.xpm, j * IMG_W, i * IMG_H);
-		if ((*game).map[i][j] == 'C' && (*game).nbr_c / 2 == 2 % 4)
-			mlx_put_image_to_window((*game).mlx, (*game).mlx_win,
-				(*game).imgC02.xpm, j * IMG_W, i * IMG_H);
-		if ((*game).map[i][j] == 'C' && (*game).nbr_c / 3 == 3 % 4)
-			mlx_put_image_to_window((*game).mlx, (*game).mlx_win,
-				(*game).imgC03.xpm, j * IMG_W, i * IMG_H);
-		if ((*game).map[i][j] == 'C' && (*game).nbr_c / 4 == 0 % 4)
-			mlx_put_image_to_window((*game).mlx, (*game).mlx_win,
-				(*game).imgC00.xpm, j * IMG_W, i * IMG_H);
-		temp--;
-	}
+	if ((*game).temp_c % 4 == 1)
+		mlx_put_image_to_window((*game).mlx, (*game).mlx_win,
+			(*game).imgC01.xpm, j * IMG_W, i * IMG_H);
+	if ((*game).temp_c % 4 == 2)
+		mlx_put_image_to_window((*game).mlx, (*game).mlx_win,
+			(*game).imgC02.xpm, j * IMG_W, i * IMG_H);
+	if ((*game).temp_c % 4 == 3)
+		mlx_put_image_to_window((*game).mlx, (*game).mlx_win,
+			(*game).imgC03.xpm, j * IMG_W, i * IMG_H);
+	if ((*game).temp_c % 4 == 0)
+		mlx_put_image_to_window((*game).mlx, (*game).mlx_win,
+			(*game).imgC00.xpm, j * IMG_W, i * IMG_H);
+	(*game).temp_c--;
 }
 
 void	free_game(t_game *game)
@@ -175,7 +185,7 @@ int	handle_input(int keysym, t_game *game)
 	return (0);
 }
 
-int	cross_close(t_game *game)
+int	x_close(t_game *game)
 {
 	free_game(game);
 	return (0);
@@ -193,16 +203,18 @@ void	move(t_game *game, int k, int m, void *xpm)
 	{
 		(*game).map[(*game).player.i][(*game).player.j] = '0';
 		replace_image(game, (*game).player.i, (*game).player.j, xpm);
+		(*game).player.i = i;
+		(*game).player.j = j;
+		(*game).mvt++;
 		game_win(game);
 	}
 	else if ((*game).map[i][j] != '1' && (*game).map[i][j] != 'E')
 	{
-		// before
 		(*game).map[(*game).player.i][(*game).player.j] = '0';
 		replace_image(game, (*game).player.i, (*game).player.j, xpm);
-		// after
 		(*game).player.i = i;
 		(*game).player.j = j;
+		(*game).mvt++;
 		(*game).map[(*game).player.i][(*game).player.j] = 'P';
 		replace_image(game, (*game).player.i, (*game).player.j, xpm);
 	}
@@ -224,10 +236,10 @@ void	open_exit(t_game *game)
 
 void	game_win(t_game *game)
 {
-	char	*msg;
-
-	msg = "Welcome at 42!";
-	write(2, msg, ft_strlen(msg));
+	ft_putstr_fd("Welcome at 42!\n", 1);
+	ft_putstr_fd("To get in the school you needed ", 1);
+	ft_putnbr_fd((*game).mvt, 1);
+	ft_putstr_fd(" movements... so long !\n", 1);
 	free_game(game);
 }
 
@@ -239,4 +251,17 @@ void	replace_image(t_game *game, int i, int j, void *xpm)
 	if ((*game).map[i][j] == 'P')
 		mlx_put_image_to_window((*game).mlx, (*game).mlx_win, xpm, j * IMG_W, i
 			* IMG_H);
+}
+
+void	print_mvt(void *mlx_ptr, void *win_ptr, int x, int y, char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		mlx_string_put(mlx_ptr, win_ptr, x, y, 0xFFFFFF, &text[i]);
+		x += 10; // Increment x to position next character horizontally
+		i++;
+	}
 }
