@@ -6,7 +6,7 @@
 #    By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/25 23:32:02 by caguillo          #+#    #+#              #
-#    Updated: 2024/02/16 00:34:50 by caguillo         ###   ########.fr        #
+#    Updated: 2024/02/17 17:48:35 by caguillo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ NAME		=	so_long
 SRCS		=	./srcs/main.c \
 				./srcs/check.c \
 				./srcs/mlx.c \
+				./srcs/sprite.c \
 				./srcs/libft.c \
 				./srcs/get_next_line.c \
 				./srcs/get_next_line_utils.c

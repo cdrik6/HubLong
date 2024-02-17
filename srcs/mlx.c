@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 20:00:45 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/17 02:49:55 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/17 19:41:21 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,10 @@ int	init_mlx(t_game *game)
 		}
 		image_loader(game);
 		draw_init_map(game); /******************/
+		// sprite_exit(game);
 		(*game).mvt = 0;
 		print_mvt(game);
+		mlx_loop_hook((*game).mlx_win, sprite_exit, game);		
 		mlx_hook((*game).mlx_win, KeyPress, KeyPressMask, handle_input, game);
 		mlx_hook((*game).mlx_win, DestroyNotify, NoEventMask, x_close, game);
 		mlx_loop((*game).mlx);
@@ -103,10 +105,6 @@ void	image_loader(t_game *game)
 
 void	load_image(t_game *game)
 {
-	(*game).img0.xpm = mlx_xpm_file_to_image((*game).mlx, FLOOR,
-			&((*game).img0.w), &((*game).img0.h));
-	(*game).img1.xpm = mlx_xpm_file_to_image((*game).mlx, WALL,
-			&((*game).img1.w), &((*game).img1.h));
 	(*game).imgC00.xpm = mlx_xpm_file_to_image((*game).mlx, C00,
 			&((*game).imgC00.w), &((*game).imgC00.h));
 	(*game).imgC01.xpm = mlx_xpm_file_to_image((*game).mlx, C01,
@@ -115,10 +113,30 @@ void	load_image(t_game *game)
 			&((*game).imgC02.w), &((*game).imgC02.h));
 	(*game).imgC03.xpm = mlx_xpm_file_to_image((*game).mlx, C03,
 			&((*game).imgC03.w), &((*game).imgC03.h));
+	(*game).imgC04.xpm = mlx_xpm_file_to_image((*game).mlx, C04,
+			&((*game).imgC04.w), &((*game).imgC04.h));
+	(*game).imgC05.xpm = mlx_xpm_file_to_image((*game).mlx, C05,
+			&((*game).imgC05.w), &((*game).imgC05.h));
+	(*game).imgC06.xpm = mlx_xpm_file_to_image((*game).mlx, C06,
+			&((*game).imgC06.w), &((*game).imgC06.h));
+	(*game).imgC07.xpm = mlx_xpm_file_to_image((*game).mlx, C07,
+			&((*game).imgC07.w), &((*game).imgC07.h));
+	(*game).imgC08.xpm = mlx_xpm_file_to_image((*game).mlx, C08,
+			&((*game).imgC08.w), &((*game).imgC08.h));
+	(*game).img0.xpm = mlx_xpm_file_to_image((*game).mlx, FLOOR,
+			&((*game).img0.w), &((*game).img0.h));
+	(*game).img1.xpm = mlx_xpm_file_to_image((*game).mlx, WALL,
+			&((*game).img1.w), &((*game).img1.h));
+	load_image2(game);
+}
+void	load_image2(t_game *game)
+{
 	(*game).imgE0.xpm = mlx_xpm_file_to_image((*game).mlx, EXIT0,
 			&((*game).imgE0.w), &((*game).imgE0.h));
 	(*game).imgE1.xpm = mlx_xpm_file_to_image((*game).mlx, EXIT1,
 			&((*game).imgE1.w), &((*game).imgE1.h));
+	(*game).imgE1x.xpm = mlx_xpm_file_to_image((*game).mlx, EXIT1X,
+			&((*game).imgE1x.w), &((*game).imgE1x.h));
 	(*game).imgPu.xpm = mlx_xpm_file_to_image((*game).mlx, P_UP,
 			&((*game).imgPu.w), &((*game).imgPu.h));
 	(*game).imgPd.xpm = mlx_xpm_file_to_image((*game).mlx, P_DOWN,
@@ -127,22 +145,34 @@ void	load_image(t_game *game)
 			&((*game).imgPl.w), &((*game).imgPl.h));
 	(*game).imgPr.xpm = mlx_xpm_file_to_image((*game).mlx, P_RIGHT,
 			&((*game).imgPr.w), &((*game).imgPr.h));
+	(*game).imgTg.xpm = mlx_xpm_file_to_image((*game).mlx, TIGG,
+			&((*game).imgTg.w), &((*game).imgTg.h));
+	(*game).imgTr.xpm = mlx_xpm_file_to_image((*game).mlx, TIGR,
+			&((*game).imgTr.w), &((*game).imgTr.h));
 }
 
 void	load_tab_image(t_game *game)
 {
-	(*game).tab_img[0] = (*game).img0.xpm;
-	(*game).tab_img[1] = (*game).img1.xpm;
-	(*game).tab_img[2] = (*game).imgC00.xpm;
-	(*game).tab_img[3] = (*game).imgC01.xpm;
-	(*game).tab_img[4] = (*game).imgC02.xpm;
-	(*game).tab_img[5] = (*game).imgC03.xpm;
-	(*game).tab_img[6] = (*game).imgE0.xpm;
-	(*game).tab_img[7] = (*game).imgE1.xpm;
-	(*game).tab_img[8] = (*game).imgPu.xpm;
-	(*game).tab_img[9] = (*game).imgPd.xpm;
-	(*game).tab_img[10] = (*game).imgPl.xpm;
-	(*game).tab_img[11] = (*game).imgPr.xpm;
+	(*game).tab_img[0] = (*game).imgC00.xpm;
+	(*game).tab_img[1] = (*game).imgC01.xpm;
+	(*game).tab_img[2] = (*game).imgC02.xpm;
+	(*game).tab_img[3] = (*game).imgC03.xpm;
+	(*game).tab_img[4] = (*game).imgC04.xpm;
+	(*game).tab_img[5] = (*game).imgC05.xpm;
+	(*game).tab_img[6] = (*game).imgC06.xpm;
+	(*game).tab_img[7] = (*game).imgC07.xpm;
+	(*game).tab_img[8] = (*game).imgC08.xpm;
+	(*game).tab_img[9] = (*game).img0.xpm;
+	(*game).tab_img[10] = (*game).img1.xpm;
+	(*game).tab_img[11] = (*game).imgE0.xpm;
+	(*game).tab_img[12] = (*game).imgE1.xpm;
+	(*game).tab_img[13] = (*game).imgE1x.xpm;
+	(*game).tab_img[14] = (*game).imgPu.xpm;
+	(*game).tab_img[15] = (*game).imgPd.xpm;
+	(*game).tab_img[16] = (*game).imgPl.xpm;
+	(*game).tab_img[17] = (*game).imgPr.xpm;
+	(*game).tab_img[18] = (*game).imgTg.xpm;
+	(*game).tab_img[19] = (*game).imgTr.xpm;
 }
 
 int	check_tab_image(t_game *game)
@@ -176,18 +206,26 @@ void	destroy_tab_image(t_game *game)
 
 void	destroy_image(t_game *game)
 {
-	mlx_destroy_image((*game).mlx, (*game).img0.xpm);
-	mlx_destroy_image((*game).mlx, (*game).img1.xpm);
 	mlx_destroy_image((*game).mlx, (*game).imgC00.xpm);
 	mlx_destroy_image((*game).mlx, (*game).imgC01.xpm);
 	mlx_destroy_image((*game).mlx, (*game).imgC02.xpm);
 	mlx_destroy_image((*game).mlx, (*game).imgC03.xpm);
+	mlx_destroy_image((*game).mlx, (*game).imgC04.xpm);
+	mlx_destroy_image((*game).mlx, (*game).imgC05.xpm);
+	mlx_destroy_image((*game).mlx, (*game).imgC06.xpm);
+	mlx_destroy_image((*game).mlx, (*game).imgC07.xpm);
+	mlx_destroy_image((*game).mlx, (*game).imgC08.xpm);
+	mlx_destroy_image((*game).mlx, (*game).img0.xpm);
+	mlx_destroy_image((*game).mlx, (*game).img1.xpm);
 	mlx_destroy_image((*game).mlx, (*game).imgE0.xpm);
 	mlx_destroy_image((*game).mlx, (*game).imgE1.xpm);
+	mlx_destroy_image((*game).mlx, (*game).imgE1x.xpm);
 	mlx_destroy_image((*game).mlx, (*game).imgPu.xpm);
 	mlx_destroy_image((*game).mlx, (*game).imgPd.xpm);
 	mlx_destroy_image((*game).mlx, (*game).imgPr.xpm);
 	mlx_destroy_image((*game).mlx, (*game).imgPl.xpm);
+	mlx_destroy_image((*game).mlx, (*game).imgTg.xpm);
+	mlx_destroy_image((*game).mlx, (*game).imgTr.xpm);
 }
 
 void	init_image_on_map(t_game *game, int i, int j)
@@ -211,16 +249,32 @@ void	init_image_on_map(t_game *game, int i, int j)
 
 void	init_C_image_on_map(t_game *game, int i, int j)
 {
-	if ((*game).temp_c % 4 == 1)
+	// printf("%d\n", (*game).temp_c);
+	if ((*game).temp_c % 9 == 1)
 		mlx_put_image_to_window((*game).mlx, (*game).mlx_win,
 			(*game).imgC01.xpm, j * IMG_W, i * IMG_H);
-	if ((*game).temp_c % 4 == 2)
+	if ((*game).temp_c % 9 == 2)
 		mlx_put_image_to_window((*game).mlx, (*game).mlx_win,
 			(*game).imgC02.xpm, j * IMG_W, i * IMG_H);
-	if ((*game).temp_c % 4 == 3)
+	if ((*game).temp_c % 9 == 3)
 		mlx_put_image_to_window((*game).mlx, (*game).mlx_win,
 			(*game).imgC03.xpm, j * IMG_W, i * IMG_H);
-	if ((*game).temp_c % 4 == 0)
+	if ((*game).temp_c % 9 == 4)
+		mlx_put_image_to_window((*game).mlx, (*game).mlx_win,
+			(*game).imgC04.xpm, j * IMG_W, i * IMG_H);
+	if ((*game).temp_c % 9 == 5)
+		mlx_put_image_to_window((*game).mlx, (*game).mlx_win,
+			(*game).imgC05.xpm, j * IMG_W, i * IMG_H);
+	if ((*game).temp_c % 9 == 6)
+		mlx_put_image_to_window((*game).mlx, (*game).mlx_win,
+			(*game).imgC06.xpm, j * IMG_W, i * IMG_H);
+	if ((*game).temp_c % 9 == 7)
+		mlx_put_image_to_window((*game).mlx, (*game).mlx_win,
+			(*game).imgC07.xpm, j * IMG_W, i * IMG_H);
+	if ((*game).temp_c % 9 == 8)
+		mlx_put_image_to_window((*game).mlx, (*game).mlx_win,
+			(*game).imgC08.xpm, j * IMG_W, i * IMG_H);
+	if ((*game).temp_c % 9 == 0)
 		mlx_put_image_to_window((*game).mlx, (*game).mlx_win,
 			(*game).imgC00.xpm, j * IMG_W, i * IMG_H);
 	(*game).temp_c--;
@@ -317,15 +371,21 @@ void	print_mvt(t_game *game)
 	char	*nbr;
 	char	*str;
 
+	nbr = NULL;
 	nbr = ft_itoa((*game).mvt);
-	str = lib_strjoin("Movements: ", nbr);
+	if (nbr)
+		str = lib_strjoin("Movements: ", nbr);
+	else
+		str = NULL;
 	mlx_put_image_to_window((*game).mlx, (*game).mlx_win, (*game).img1.xpm, 0
 		* IMG_W, 0 * IMG_H);
 	mlx_put_image_to_window((*game).mlx, (*game).mlx_win, (*game).img1.xpm, 1
 		* IMG_W, 0 * IMG_H);
 	mlx_put_image_to_window((*game).mlx, (*game).mlx_win, (*game).img1.xpm, 2
 		* IMG_W, 0 * IMG_H);
-	mlx_string_put((*game).mlx, (*game).mlx_win, 0, IMG_H / 2, 0xFFFFFF, str);
+	if (str)
+		mlx_string_put((*game).mlx, (*game).mlx_win, 0, IMG_H / 2, 0xFFFFFF,
+			str);
 	free(nbr);
 	free(str);
 }

@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 20:44:35 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/17 02:49:24 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/17 18:03:14 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,15 @@
 # define KEY_Q 113
 # define KEY_ESC 65307
 
+# define C00 "images/c00.xpm"
+# define C01 "images/c01.xpm"
+# define C02 "images/c02.xpm"
+# define C03 "images/c03.xpm"
+# define C04 "images/c04.xpm"
+# define C05 "images/c05.xpm"
+# define C06 "images/c06.xpm"
+# define C07 "images/c07.xpm"
+# define C08 "images/c08.xpm"
 # define WALL "images/wall.xpm"
 # define FLOOR "images/floor.xpm"
 # define P_UP "images/up.xpm"
@@ -45,11 +54,11 @@
 # define P_RIGHT "images/right.xpm"
 # define EXIT0 "images/exit0.xpm"
 # define EXIT1 "images/exit1.xpm"
-# define C00 "images/c00.xpm"
-# define C01 "images/c01.xpm"
-# define C02 "images/c02.xpm"
-# define C03 "images/c03.xpm"
-# define IMG_NBR 12
+# define EXIT1X "images/exit1x.xpm"
+# define TIGG "images/tigg.xpm"
+# define TIGR "images/tigr.xpm"
+# define C00_NBR 9
+# define IMG_NBR 20
 
 typedef struct s_img
 {
@@ -88,13 +97,21 @@ typedef struct s_game
 	t_img	imgC01;
 	t_img	imgC02;
 	t_img	imgC03;
+	t_img	imgC04;
+	t_img	imgC05;
+	t_img	imgC06;
+	t_img	imgC07;
+	t_img	imgC08;
 	int		temp_c;
 	t_img	imgE0;
 	t_img	imgE1;
+	t_img	imgE1x;
 	t_img	imgPu;
 	t_img	imgPd;
 	t_img	imgPl;
 	t_img	imgPr;
+	t_img	imgTg;
+	t_img	imgTr;
 	void	*tab_img[IMG_NBR];
 }			t_game;
 
@@ -141,6 +158,7 @@ void		draw_init_map(t_game *game);
 
 void		image_loader(t_game *game);
 void		load_image(t_game *game);
+void		load_image2(t_game *game);
 void		load_tab_image(t_game *game);
 int			check_tab_image(t_game *game);
 void		destroy_tab_image(t_game *game);
@@ -159,5 +177,8 @@ void		open_exit(t_game *game);
 void		game_win(t_game *game);
 int			check_size_map(t_game *game);
 void		print_mvt(t_game *game);
+
+// bonus
+int	sprite_exit(t_game *game);
 
 #endif
