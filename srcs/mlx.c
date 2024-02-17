@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 20:00:45 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/17 00:24:15 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/17 02:49:55 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ int	init_mlx(t_game *game)
 			free((*game).mlx);
 			return (error_msg(8), 0);
 		}
-		load_image(game); /***************/
-		draw_init_map(game);
+		image_loader(game);
+		draw_init_map(game); /******************/
 		(*game).mvt = 0;
 		print_mvt(game);
 		mlx_hook((*game).mlx_win, KeyPress, KeyPressMask, handle_input, game);
@@ -85,7 +85,22 @@ void	draw_init_map(t_game *game)
 	}
 }
 
-/********************** load issue, could be NULL **********************/
+void	image_loader(t_game *game)
+{
+	load_image(game);
+	load_tab_image(game);
+	if (check_tab_image(game) != 0)
+	{
+		error_msg(9);
+		destroy_tab_image(game);
+		mlx_destroy_window((*game).mlx, (*game).mlx_win);
+		mlx_destroy_display((*game).mlx);
+		free((*game).mlx);
+		free_map((*game).map, (*game).rows);
+		exit(0);
+	}
+}
+
 void	load_image(t_game *game)
 {
 	(*game).img0.xpm = mlx_xpm_file_to_image((*game).mlx, FLOOR,
@@ -112,7 +127,6 @@ void	load_image(t_game *game)
 			&((*game).imgPl.w), &((*game).imgPl.h));
 	(*game).imgPr.xpm = mlx_xpm_file_to_image((*game).mlx, P_RIGHT,
 			&((*game).imgPr.w), &((*game).imgPr.h));
-	load_tab_image(game);
 }
 
 void	load_tab_image(t_game *game)
@@ -129,44 +143,33 @@ void	load_tab_image(t_game *game)
 	(*game).tab_img[9] = (*game).imgPd.xpm;
 	(*game).tab_img[10] = (*game).imgPl.xpm;
 	(*game).tab_img[11] = (*game).imgPr.xpm;
-	check_tab_image(game);
 }
 
-void	check_tab_image(t_game *game)
+int	check_tab_image(t_game *game)
 {
 	int	i;
-	int	j;
+	int	is_null;
 
+	is_null = 0;
 	i = 0;
-	while (i < 12)
+	while (i < IMG_NBR)
 	{
 		if (!(*game).tab_img[i])
-		{
-			j = 0;
-			// while (j != i && j < 12)
-			// {
-			mlx_destroy_image((*game).mlx, (*game).img0.xpm);
-			mlx_destroy_image((*game).mlx, (*game).imgC00.xpm);
-			mlx_destroy_image((*game).mlx, (*game).imgC01.xpm);
-			mlx_destroy_image((*game).mlx, (*game).imgC02.xpm);
-			mlx_destroy_image((*game).mlx, (*game).imgC03.xpm);
-			mlx_destroy_image((*game).mlx, (*game).imgE0.xpm);
-			mlx_destroy_image((*game).mlx, (*game).imgE1.xpm);
-			mlx_destroy_image((*game).mlx, (*game).imgPu.xpm);
-			mlx_destroy_image((*game).mlx, (*game).imgPd.xpm);
-			mlx_destroy_image((*game).mlx, (*game).imgPr.xpm);
-			mlx_destroy_image((*game).mlx, (*game).imgPl.xpm);
-			// mlx_destroy_image((*game).mlx, (*game).tab_img[i]);
-			j++;
-			//}
-			// destroy_image(game);
-			mlx_destroy_window((*game).mlx, (*game).mlx_win);
-			mlx_destroy_display((*game).mlx);
-			free((*game).mlx);
-			free_map((*game).map, (*game).rows);
-			exit(0);
-		}
-		// free_game(game);
+			is_null++;
+		i++;
+	}
+	return (is_null);
+}
+
+void	destroy_tab_image(t_game *game)
+{
+	int	i;
+
+	i = 0;
+	while (i < IMG_NBR)
+	{
+		if ((*game).tab_img[i])
+			mlx_destroy_image((*game).mlx, (*game).tab_img[i]);
 		i++;
 	}
 }
@@ -244,6 +247,7 @@ int	x_close(t_game *game)
 	free_game(game);
 	return (0);
 }
+
 void	move(t_game *game, int k, int m, void *xpm)
 {
 	int	i;
@@ -292,7 +296,7 @@ void	open_exit(t_game *game)
 void	game_win(t_game *game)
 {
 	ft_putstr_fd("Welcome at 42!\n", 1);
-	ft_putstr_fd("To get in the school you needed ", 1);
+	ft_putstr_fd("To got in the school you needed ", 1);
 	ft_putnbr_fd((*game).mvt, 1);
 	ft_putstr_fd(" movements... so long !\n", 1);
 	free_game(game);
@@ -325,24 +329,3 @@ void	print_mvt(t_game *game)
 	free(nbr);
 	free(str);
 }
-
-/*
-#include <stdbool.h>
-
-bool	all_images_successfully_loaded(t_game *game)
-{
-	return (game->img0.xpm != NULL && \
-		game->img1.xpm != NULL && \
-		game->imgC00.xpm != NULL && \
-		game->imgC01.xpm != NULL && \
-		game->imgC02.xpm != NULL && \
-		game->imgC03.xpm != NULL && \
-		game->imgE0.xpm != NULL && \
-		game->imgE1.xpm != NULL && \
-		game->imgPu.xpm != NULL && \
-		game->imgPd.xpm != NULL && \
-		game->imgPl.xpm != NULL &&\
-		game->imgPr.xpm != NULL);
-}
-
-*/

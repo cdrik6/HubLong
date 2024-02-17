@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 19:45:04 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/16 22:07:53 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/17 02:51:00 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ int	main(int argc, char **argv)
 		return (free_map(game.map, game.rows), 0);
 	if (init_mlx(&game) == 0)
 		return (free_map(game.map, game.rows), 0);
-	// if (init_mlx(&game) == 0)
-	// 	return (free_map(game.map, game.rows), 0); /******** msg error mlx*/
 	return (0);
 }
 
@@ -148,4 +146,6 @@ void	error_msg(int k)
 		ft_putstr_fd("Error\nInvalid map (too big for the screen).\n", 2);
 	if (k == 8)
 		ft_putstr_fd("Error\nMLX can't generate the window.\n", 2);
+	if (k == 9)
+		ft_putstr_fd("Error\nMLX can't load whole images.\n", 2);
 }

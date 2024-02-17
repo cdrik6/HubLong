@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 20:44:35 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/17 00:22:29 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/17 02:49:24 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@
 # define C01 "images/c01.xpm"
 # define C02 "images/c02.xpm"
 # define C03 "images/c03.xpm"
+# define IMG_NBR 12
 
 typedef struct s_img
 {
@@ -94,7 +95,7 @@ typedef struct s_game
 	t_img	imgPd;
 	t_img	imgPl;
 	t_img	imgPr;
-	void	*tab_img[12];
+	void	*tab_img[IMG_NBR];
 }			t_game;
 
 // main.c
@@ -137,9 +138,13 @@ char		*lib_strjoin(char *s1, char *s2);
 // mlx.c
 int			init_mlx(t_game *game);
 void		draw_init_map(t_game *game);
+
+void		image_loader(t_game *game);
 void		load_image(t_game *game);
 void		load_tab_image(t_game *game);
-void		check_tab_image(t_game *game);
+int			check_tab_image(t_game *game);
+void		destroy_tab_image(t_game *game);
+
 void		init_image_on_map(t_game *game, int i, int j);
 void		init_C_image_on_map(t_game *game, int i, int j);
 void		free_game(t_game *game);
