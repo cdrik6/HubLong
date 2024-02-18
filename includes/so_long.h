@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 20:44:35 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/17 18:03:14 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/18 22:44:13 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <X11/X.h>
 # include <X11/keysym.h>
 # include <stdio.h>
+# include <time.h>
 
 # define IMG_W 32
 # define IMG_H 32
@@ -62,123 +63,125 @@
 
 typedef struct s_img
 {
-	void	*xpm;
-	int		w;
-	int		h;
+	void			*xpm;
+	int				w;
+	int				h;
 
-}			t_img;
+}					t_img;
 
 typedef struct s_point
 {
-	int		i;
-	int		j;
+	int				i;
+	int				j;
 
-}			t_point;
+}					t_point;
 
 typedef struct s_game
 {
 	// map
-	char	**map;
-	int		rows;
-	int		cols;
+	char			**map;
+	int				rows;
+	int				cols;
 	// utils
-	t_point	player;
-	t_point	exit;
-	int		nbr_c;
-	int		open;
-	int		mvt;
+	t_point			player;
+	t_point			exit;
+	int				nbr_c;
+	int				open;
+	int				mvt;
 	// mlx
-	void	*mlx;
-	void	*mlx_win;
+	void			*mlx;
+	void			*mlx_win;
 	// images
-	t_img	img1;
-	t_img	img0;
-	t_img	imgC00;
-	t_img	imgC01;
-	t_img	imgC02;
-	t_img	imgC03;
-	t_img	imgC04;
-	t_img	imgC05;
-	t_img	imgC06;
-	t_img	imgC07;
-	t_img	imgC08;
-	int		temp_c;
-	t_img	imgE0;
-	t_img	imgE1;
-	t_img	imgE1x;
-	t_img	imgPu;
-	t_img	imgPd;
-	t_img	imgPl;
-	t_img	imgPr;
-	t_img	imgTg;
-	t_img	imgTr;
-	void	*tab_img[IMG_NBR];
-}			t_game;
+	t_img			img1;
+	t_img			img0;
+	t_img			imgC00;
+	t_img			imgC01;
+	t_img			imgC02;
+	t_img			imgC03;
+	t_img			imgC04;
+	t_img			imgC05;
+	t_img			imgC06;
+	t_img			imgC07;
+	t_img			imgC08;
+	int				temp_c;
+	t_img			imgE0;
+	t_img			imgE1;
+	t_img			imgE1x;
+	t_img			imgPu;
+	t_img			imgPd;
+	t_img			imgPl;
+	t_img			imgPr;
+	t_img			imgTg;
+	t_img			imgTr;
+	void			*tab_img[IMG_NBR];
+	struct timespec	start;
+	int				exit_frame;
+}					t_game;
 
 // main.c
 // main
-int			check_input(int argc, char **argv);
-char		**create_map(int rows, char *file);
-char		**fill_map(char **newmap, int rows, int fd);
-int			count_rows(t_game *game, char *file);
-void		free_map(char **map, int rows);
-void		error_msg(int k);
+int					check_input(int argc, char **argv);
+char				**create_map(int rows, char *file);
+char				**fill_map(char **newmap, int rows, int fd);
+int					count_rows(t_game *game, char *file);
+void				free_map(char **map, int rows);
+void				error_msg(int k);
 
 // check.c
-int			check_map(t_game *game);
-int			check_map2(t_game *game);
-char		*check_rows(t_game *game);
-char		*check_cols(t_game *game);
-int			last_nl(char *str);
-char		*check_vertical_wall(t_game *game);
-char		*check_horizontal_wall(t_game *game);
-char		*check_player(t_game *game);
-char		*check_exit(t_game *game);
-char		*check_collectible(t_game *game);
-char		*check_other(t_game *game);
-char		*check_path(t_game *game);
-void		flood_fill(t_game *game, int i, int j);
-void		check_flood(t_game *game);
-void		back_flood(t_game *game);
+int					check_map(t_game *game);
+int					check_map2(t_game *game);
+char				*check_rows(t_game *game);
+char				*check_cols(t_game *game);
+int					last_nl(char *str);
+char				*check_vertical_wall(t_game *game);
+char				*check_horizontal_wall(t_game *game);
+char				*check_player(t_game *game);
+char				*check_exit(t_game *game);
+char				*check_collectible(t_game *game);
+char				*check_other(t_game *game);
+char				*check_path(t_game *game);
+void				flood_fill(t_game *game, int i, int j);
+void				check_flood(t_game *game);
+void				back_flood(t_game *game);
 // void		get_point(t_game game, t_point *point, char c);
 // t_point		*init_point(void);
 
 // libft
-char		*ft_strnstr(const char *big, const char *little, int len);
-void		ft_putnbr_fd(int n, int fd);
-void		ft_putstr_fd(char *s, int fd);
-size_t		len_nbr(int n);
-char		*fill_nbr(char *nbr, size_t size, int n);
-char		*ft_itoa(int n);
-char		*lib_strjoin(char *s1, char *s2);
+char				*ft_strnstr(const char *big, const char *little, int len);
+void				ft_putnbr_fd(int n, int fd);
+void				ft_putstr_fd(char *s, int fd);
+size_t				len_nbr(int n);
+char				*fill_nbr(char *nbr, size_t size, int n);
+char				*ft_itoa(int n);
+char				*lib_strjoin(char *s1, char *s2);
 
 // mlx.c
-int			init_mlx(t_game *game);
-void		draw_init_map(t_game *game);
+int					init_mlx(t_game *game);
+void				draw_init_map(t_game *game);
 
-void		image_loader(t_game *game);
-void		load_image(t_game *game);
-void		load_image2(t_game *game);
-void		load_tab_image(t_game *game);
-int			check_tab_image(t_game *game);
-void		destroy_tab_image(t_game *game);
+void				image_loader(t_game *game);
+void				load_image(t_game *game);
+void				load_image2(t_game *game);
+void				load_tab_image(t_game *game);
+int					check_tab_image(t_game *game);
+void				destroy_tab_image(t_game *game);
 
-void		init_image_on_map(t_game *game, int i, int j);
-void		init_C_image_on_map(t_game *game, int i, int j);
-void		free_game(t_game *game);
-int			handle_input(int keysym, t_game *game);
-void		destroy_image(t_game *game);
-void		free_game(t_game *game);
+void				init_image_on_map(t_game *game, int i, int j);
+void				init_C_image_on_map(t_game *game, int i, int j);
+void				free_game(t_game *game);
+int					handle_input(int keysym, t_game *game);
+void				destroy_image(t_game *game);
+void				free_game(t_game *game);
 
-void		replace_image(t_game *game, int i, int j, void *xpm);
-void		move(t_game *game, int k, int m, void *xpm);
-int			x_close(t_game *game);
-void		open_exit(t_game *game);
-void		game_win(t_game *game);
-int			check_size_map(t_game *game);
-void		print_mvt(t_game *game);
+void				replace_image(t_game *game, int i, int j, void *xpm);
+void				move(t_game *game, int k, int m, void *xpm);
+int					x_close(t_game *game);
+void				open_exit(t_game *game);
+void				game_win(t_game *game);
+int					check_size_map(t_game *game);
+void				print_mvt(t_game *game);
 
 // bonus
-int	sprite_exit(t_game *game);
+int					sprite_exit(t_game *game);
 
 #endif

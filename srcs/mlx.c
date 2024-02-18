@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 20:00:45 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/17 19:41:21 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/18 22:41:03 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ int	init_mlx(t_game *game)
 		// sprite_exit(game);
 		(*game).mvt = 0;
 		print_mvt(game);
-		mlx_loop_hook((*game).mlx_win, sprite_exit, game);		
+		clock_gettime(CLOCK_MONOTONIC, &((*game).start));		
+		mlx_loop_hook((*game).mlx, sprite_exit, game);
 		mlx_hook((*game).mlx_win, KeyPress, KeyPressMask, handle_input, game);
 		mlx_hook((*game).mlx_win, DestroyNotify, NoEventMask, x_close, game);
 		mlx_loop((*game).mlx);
