@@ -6,7 +6,7 @@
 #    By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/25 23:32:02 by caguillo          #+#    #+#              #
-#    Updated: 2024/02/17 17:48:35 by caguillo         ###   ########.fr        #
+#    Updated: 2024/02/19 02:25:01 by caguillo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ SRCS		=	./srcs/main.c \
 
 MLX_DIR		=	./minilibx-linux
 MLX			= 	$(MLX_DIR)/libmlx.a
-MLXLIB		= 	$(MLX) -lXext -lX11 -lm
+MLXLIB		= 	$(MLX) -lXext -lX11 -lm -lrt
 
 INCS_SRCS	=	./includes/so_long.h
 INCS_DIR	=	-Iincludes -Iminilibx-linux

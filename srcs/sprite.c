@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 17:40:25 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/19 00:06:30 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/19 03:05:26 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,16 @@
 int	sprite_exit(t_game *game)
 {
 	struct timespec	end;
+	int				diff;
 
 	clock_gettime(CLOCK_MONOTONIC, &end);
-	if ((end.tv_sec - (*game).start.tv_sec) % 10 == 0)
+	// printf("s %ld\n", (*game).start.tv_nsec);
+	// printf("e %ld\n", end.tv_nsec);
+	// printf("diff %ld\n", (end.tv_nsec - (*game).start.tv_nsec));
+	// diff = (end.tv_nsec - (*game).start.tv_nsec) / 1000000;
+	diff = (end.tv_nsec - (*game).start.tv_nsec) / 1000000;
+	(*game).start = end;
+	if ((diff) == 1)
 	{
 		if ((*game).exit_frame == 0)
 		{
