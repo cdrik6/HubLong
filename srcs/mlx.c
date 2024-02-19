@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 20:00:45 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/19 02:03:30 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/19 18:32:26 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ int	init_mlx(t_game *game)
 			return (error_msg(8), 0);
 		}
 		image_loader(game);
-		draw_init_map(game); /******************/
-		// sprite_exit(game);
+		draw_init_map(game); /******************/		
 		(*game).mvt = 0;
 		print_mvt(game);
 		clock_gettime(CLOCK_MONOTONIC, &((*game).start));
+		(*game).exit_frame = 0;
 		// printf("%ld\n", (*game).start.tv_sec);
 		// printf("%ld\n", (*game).start.tv_nsec);
 		mlx_loop_hook((*game).mlx, sprite_exit, game);
