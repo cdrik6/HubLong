@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 00:29:14 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/16 21:44:12 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/19 23:23:45 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,7 +213,7 @@ char	*check_collectible(t_game *game)
 	if (count < 1)
 		return ("Invalid map (collectible missing).\n");
 	(*game).nbr_c = count;
-	(*game).temp_c = count;
+	(*game).select_c = count;
 	return (NULL);
 }
 

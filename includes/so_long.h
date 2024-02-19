@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 20:44:35 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/19 18:34:15 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/19 23:39:37 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "get_next_line.h"
 # include <X11/X.h>
 # include <X11/keysym.h>
+//# include <linux/time.h>
 # include <stdio.h>
 # include <time.h>
 
@@ -105,7 +106,7 @@ typedef struct s_game
 	t_img				imgC06;
 	t_img				imgC07;
 	t_img				imgC08;
-	int					temp_c;
+	int					select_c;
 	t_img				imgE0;
 	t_img				imgE1;
 	t_img				imgE1x;
@@ -116,8 +117,10 @@ typedef struct s_game
 	t_img				imgTg;
 	t_img				imgTr;
 	void				*tab_img[IMG_NBR];
-	nsec				start;
+	// sprite
+	nsec				t0;
 	int					exit_frame;
+	int					nbr_tig;
 }						t_game;
 
 // main.c
@@ -186,5 +189,7 @@ void					print_mvt(t_game *game);
 
 // bonus
 int						sprite_exit(t_game *game);
+int						get_millis(nsec nano, nsec t0);
+int						sprite_tig(t_game *game);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 20:00:45 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/19 18:32:26 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/19 23:52:42 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,13 @@ int	init_mlx(t_game *game)
 			return (error_msg(8), 0);
 		}
 		image_loader(game);
-		draw_init_map(game); /******************/		
+		draw_init_map(game); /******************/
 		(*game).mvt = 0;
 		print_mvt(game);
-		clock_gettime(CLOCK_MONOTONIC, &((*game).start));
+		clock_gettime(CLOCK_MONOTONIC, &((*game).t0));
 		(*game).exit_frame = 0;
-		// printf("%ld\n", (*game).start.tv_sec);
-		// printf("%ld\n", (*game).start.tv_nsec);
 		mlx_loop_hook((*game).mlx, sprite_exit, game);
+		//mlx_loop_hook((*game).mlx, sprite_tig, game);
 		mlx_hook((*game).mlx_win, KeyPress, KeyPressMask, handle_input, game);
 		mlx_hook((*game).mlx_win, DestroyNotify, NoEventMask, x_close, game);
 		mlx_loop((*game).mlx);
@@ -253,34 +252,34 @@ void	init_image_on_map(t_game *game, int i, int j)
 void	init_C_image_on_map(t_game *game, int i, int j)
 {
 	// printf("%d\n", (*game).temp_c);
-	if ((*game).temp_c % 9 == 1)
+	if ((*game).select_c % 9 == 1)
 		mlx_put_image_to_window((*game).mlx, (*game).mlx_win,
 			(*game).imgC01.xpm, j * IMG_W, i * IMG_H);
-	if ((*game).temp_c % 9 == 2)
+	if ((*game).select_c % 9 == 2)
 		mlx_put_image_to_window((*game).mlx, (*game).mlx_win,
 			(*game).imgC02.xpm, j * IMG_W, i * IMG_H);
-	if ((*game).temp_c % 9 == 3)
+	if ((*game).select_c % 9 == 3)
 		mlx_put_image_to_window((*game).mlx, (*game).mlx_win,
 			(*game).imgC03.xpm, j * IMG_W, i * IMG_H);
-	if ((*game).temp_c % 9 == 4)
+	if ((*game).select_c % 9 == 4)
 		mlx_put_image_to_window((*game).mlx, (*game).mlx_win,
 			(*game).imgC04.xpm, j * IMG_W, i * IMG_H);
-	if ((*game).temp_c % 9 == 5)
+	if ((*game).select_c % 9 == 5)
 		mlx_put_image_to_window((*game).mlx, (*game).mlx_win,
 			(*game).imgC05.xpm, j * IMG_W, i * IMG_H);
-	if ((*game).temp_c % 9 == 6)
+	if ((*game).select_c % 9 == 6)
 		mlx_put_image_to_window((*game).mlx, (*game).mlx_win,
 			(*game).imgC06.xpm, j * IMG_W, i * IMG_H);
-	if ((*game).temp_c % 9 == 7)
+	if ((*game).select_c % 9 == 7)
 		mlx_put_image_to_window((*game).mlx, (*game).mlx_win,
 			(*game).imgC07.xpm, j * IMG_W, i * IMG_H);
-	if ((*game).temp_c % 9 == 8)
+	if ((*game).select_c % 9 == 8)
 		mlx_put_image_to_window((*game).mlx, (*game).mlx_win,
 			(*game).imgC08.xpm, j * IMG_W, i * IMG_H);
-	if ((*game).temp_c % 9 == 0)
+	if ((*game).select_c % 9 == 0)
 		mlx_put_image_to_window((*game).mlx, (*game).mlx_win,
 			(*game).imgC00.xpm, j * IMG_W, i * IMG_H);
-	(*game).temp_c--;
+	(*game).select_c--;
 }
 
 int	handle_input(int keysym, t_game *game)
@@ -353,7 +352,7 @@ void	open_exit(t_game *game)
 void	game_win(t_game *game)
 {
 	ft_putstr_fd("Welcome at 42!\n", 1);
-	ft_putstr_fd("To got in the school you needed ", 1);
+	ft_putstr_fd("To join the school you needed ", 1);
 	ft_putnbr_fd((*game).mvt, 1);
 	ft_putstr_fd(" movements... so long !\n", 1);
 	free_game(game);
