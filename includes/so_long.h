@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 20:44:35 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/20 03:42:56 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/20 19:03:38 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,9 @@
 # define EXIT1A "images/exit1a.xpm"
 # define EXIT1B "images/exit1b.xpm"
 # define EXIT1C "images/exit1c.xpm"
-# define TIGG "images/tigg.xpm"
+# define EXIT1D "images/exit1d.xpm"
 # define TIGR "images/tigr.xpm"
+//# define TIGG "images/tigg.xpm"
 # define C00_NBR 9
 # define IMG_NBR 21
 
@@ -88,7 +89,7 @@ typedef struct s_game
 	int					cols;
 	// utils
 	t_point				player;
-	t_point				exit;	
+	t_point				exit;
 	int					nbr_c;
 	int					open;
 	int					mvt;
@@ -112,16 +113,19 @@ typedef struct s_game
 	t_img				imgE1a;
 	t_img				imgE1b;
 	t_img				imgE1c;
+	t_img				imgE1d;
 	t_img				imgPu;
 	t_img				imgPd;
 	t_img				imgPl;
 	t_img				imgPr;
-	t_img				imgTg;
 	t_img				imgTr;
+	// t_img				imgTg;
 	void				*tab_img[IMG_NBR];
-	// bonus
-	nsec				t0;
+	// sprite
+	nsec				t0;	
 	int					exit_frame;
+	// anim
+	nsec				t_tig;
 	int					nbr_tig;
 	t_point				tig;
 }						t_game;
@@ -192,7 +196,13 @@ void					print_mvt(t_game *game);
 
 // bonus
 int						sprite_exit(t_game *game);
-int						get_millis(nsec nano, nsec t0);
-int						sprite_tig(t_game *game);
+int						get_diff_ms(nsec nano, nsec t0);
+int						animation(t_game *game);
+int						init_tig_on_map(t_game *game);
+void					nbr_tig_on_map(t_game *game);
+int						anim_tig(t_game *game);
+int						handle_tig(t_game *game);
+void					move_tig(t_game *game, int k, int m, void *xpm);
+void					game_lose(t_game *game);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 19:45:04 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/17 23:16:07 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/20 19:51:50 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ void	error_msg(int k)
 	if (k == 6)
 		ft_putstr_fd("Error\nCan't initialize the MLX.\n", 2);
 	if (k == 7)
-		ft_putstr_fd("Error\nInvalid map (too big for the screen).\n", 2);
+		ft_putstr_fd("The map (too big for the screen).\n", 2);
 	if (k == 8)
 		ft_putstr_fd("Error\nMLX can't generate the window.\n", 2);
 	if (k == 9)

@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 20:00:45 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/20 02:53:46 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/20 19:47:54 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,12 @@ int	init_mlx(t_game *game)
 		(*game).mvt = 0;
 		print_mvt(game);
 		clock_gettime(CLOCK_MONOTONIC, &((*game).t0));
+		clock_gettime(CLOCK_MONOTONIC, &((*game).t_tig));
 		(*game).exit_frame = 0;
-		mlx_loop_hook((*game).mlx, sprite_exit, game);
-		//mlx_loop_hook((*game).mlx, sprite_tig, game);
+		nbr_tig_on_map(game);
+		if ((*game).nbr_tig == 1)
+			init_tig_on_map(game);
+		mlx_loop_hook((*game).mlx, animation, game);		
 		mlx_hook((*game).mlx_win, KeyPress, KeyPressMask, handle_input, game);
 		mlx_hook((*game).mlx_win, DestroyNotify, NoEventMask, x_close, game);
 		mlx_loop((*game).mlx);
@@ -140,7 +143,9 @@ void	load_image2(t_game *game)
 	(*game).imgE1b.xpm = mlx_xpm_file_to_image((*game).mlx, EXIT1B,
 			&((*game).imgE1b.w), &((*game).imgE1b.h));
 	(*game).imgE1c.xpm = mlx_xpm_file_to_image((*game).mlx, EXIT1C,
-			&((*game).imgE1c.w), &((*game).imgE1c.h));		
+			&((*game).imgE1c.w), &((*game).imgE1c.h));
+	(*game).imgE1d.xpm = mlx_xpm_file_to_image((*game).mlx, EXIT1D,
+			&((*game).imgE1d.w), &((*game).imgE1d.h));
 	(*game).imgPu.xpm = mlx_xpm_file_to_image((*game).mlx, P_UP,
 			&((*game).imgPu.w), &((*game).imgPu.h));
 	(*game).imgPd.xpm = mlx_xpm_file_to_image((*game).mlx, P_DOWN,
@@ -149,8 +154,6 @@ void	load_image2(t_game *game)
 			&((*game).imgPl.w), &((*game).imgPl.h));
 	(*game).imgPr.xpm = mlx_xpm_file_to_image((*game).mlx, P_RIGHT,
 			&((*game).imgPr.w), &((*game).imgPr.h));
-	(*game).imgTg.xpm = mlx_xpm_file_to_image((*game).mlx, TIGG,
-			&((*game).imgTg.w), &((*game).imgTg.h));
 	(*game).imgTr.xpm = mlx_xpm_file_to_image((*game).mlx, TIGR,
 			&((*game).imgTr.w), &((*game).imgTr.h));
 }
@@ -172,11 +175,11 @@ void	load_tab_image(t_game *game)
 	(*game).tab_img[12] = (*game).imgE1a.xpm;
 	(*game).tab_img[13] = (*game).imgE1b.xpm;
 	(*game).tab_img[14] = (*game).imgE1c.xpm;
-	(*game).tab_img[15] = (*game).imgPu.xpm;
-	(*game).tab_img[16] = (*game).imgPd.xpm;
-	(*game).tab_img[17] = (*game).imgPl.xpm;
-	(*game).tab_img[18] = (*game).imgPr.xpm;
-	(*game).tab_img[19] = (*game).imgTg.xpm;
+	(*game).tab_img[15] = (*game).imgE1d.xpm;
+	(*game).tab_img[16] = (*game).imgPu.xpm;
+	(*game).tab_img[17] = (*game).imgPd.xpm;
+	(*game).tab_img[18] = (*game).imgPl.xpm;
+	(*game).tab_img[19] = (*game).imgPr.xpm;
 	(*game).tab_img[20] = (*game).imgTr.xpm;
 }
 
@@ -226,11 +229,11 @@ void	destroy_image(t_game *game)
 	mlx_destroy_image((*game).mlx, (*game).imgE1a.xpm);
 	mlx_destroy_image((*game).mlx, (*game).imgE1b.xpm);
 	mlx_destroy_image((*game).mlx, (*game).imgE1c.xpm);
+	mlx_destroy_image((*game).mlx, (*game).imgE1d.xpm);
 	mlx_destroy_image((*game).mlx, (*game).imgPu.xpm);
 	mlx_destroy_image((*game).mlx, (*game).imgPd.xpm);
 	mlx_destroy_image((*game).mlx, (*game).imgPr.xpm);
 	mlx_destroy_image((*game).mlx, (*game).imgPl.xpm);
-	mlx_destroy_image((*game).mlx, (*game).imgTg.xpm);
 	mlx_destroy_image((*game).mlx, (*game).imgTr.xpm);
 }
 
@@ -244,8 +247,8 @@ void	init_image_on_map(t_game *game, int i, int j)
 		mlx_put_image_to_window((*game).mlx, (*game).mlx_win, (*game).img0.xpm,
 			j * IMG_W, i * IMG_H);
 	if ((*game).map[i][j] == 'E')
-		mlx_put_image_to_window((*game).mlx, (*game).mlx_win, (*game).imgE1a.xpm,
-			j * IMG_W, i * IMG_H);
+		mlx_put_image_to_window((*game).mlx, (*game).mlx_win,
+			(*game).imgE1a.xpm, j * IMG_W, i * IMG_H);
 	if ((*game).map[i][j] == 'P')
 		mlx_put_image_to_window((*game).mlx, (*game).mlx_win, (*game).imgPu.xpm,
 			j * IMG_W, i * IMG_H);
