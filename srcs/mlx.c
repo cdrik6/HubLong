@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 20:00:45 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/20 19:47:54 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/20 21:46:44 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	init_mlx(t_game *game)
 		nbr_tig_on_map(game);
 		if ((*game).nbr_tig == 1)
 			init_tig_on_map(game);
-		mlx_loop_hook((*game).mlx, animation, game);		
+		mlx_loop_hook((*game).mlx, animation, game);
 		mlx_hook((*game).mlx_win, KeyPress, KeyPressMask, handle_input, game);
 		mlx_hook((*game).mlx_win, DestroyNotify, NoEventMask, x_close, game);
 		mlx_loop((*game).mlx);
@@ -258,7 +258,7 @@ void	init_image_on_map(t_game *game, int i, int j)
 
 void	init_C_image_on_map(t_game *game, int i, int j)
 {
-	// printf("%d\n", (*game).temp_c);
+	
 	if ((*game).select_c % 9 == 1)
 		mlx_put_image_to_window((*game).mlx, (*game).mlx_win,
 			(*game).imgC01.xpm, j * IMG_W, i * IMG_H);
@@ -291,7 +291,6 @@ void	init_C_image_on_map(t_game *game, int i, int j)
 
 int	handle_input(int keysym, t_game *game)
 {
-	// printf("%d\n", keysym);
 	if (keysym == KEY_ESC || keysym == KEY_Q)
 		free_game(game);
 	if (keysym == KEY_UP || keysym == KEY_W)
@@ -318,31 +317,36 @@ void	move(t_game *game, int k, int m, void *xpm)
 
 	i = (*game).player.i + k;
 	j = (*game).player.j + m;
-	if ((*game).map[i][j] == 'C')
-		open_exit(game);
-	if ((*game).map[i][j] == 'E' && (*game).open == 1)
+	if (i < (*game).rows && j < (*game).cols)
 	{
-		(*game).map[(*game).player.i][(*game).player.j] = '0';
-		replace_image(game, (*game).player.i, (*game).player.j, xpm);
-		(*game).player.i = i;
-		(*game).player.j = j;
-		(*game).mvt++;
-		print_mvt(game);
-		game_win(game);
+		if (i == (*game).tig.i && j == (*game).tig.j)
+			game_lose(game);
+		if ((*game).map[i][j] == 'C')
+			open_exit(game);
+		if ((*game).map[i][j] == 'E' && (*game).open == 1)
+		{
+			(*game).map[(*game).player.i][(*game).player.j] = '0';
+			replace_image(game, (*game).player.i, (*game).player.j, xpm);
+			(*game).player.i = i;
+			(*game).player.j = j;
+			(*game).mvt++;
+			print_mvt(game);
+			game_win(game);
+		}
+		else if ((*game).map[i][j] != '1' && (*game).map[i][j] != 'E')
+		{
+			(*game).map[(*game).player.i][(*game).player.j] = '0';
+			replace_image(game, (*game).player.i, (*game).player.j, xpm);
+			(*game).player.i = i;
+			(*game).player.j = j;
+			(*game).mvt++;
+			print_mvt(game);
+			(*game).map[(*game).player.i][(*game).player.j] = 'P';
+			replace_image(game, (*game).player.i, (*game).player.j, xpm);
+		}
+		else
+			replace_image(game, (*game).player.i, (*game).player.j, xpm);
 	}
-	else if ((*game).map[i][j] != '1' && (*game).map[i][j] != 'E')
-	{
-		(*game).map[(*game).player.i][(*game).player.j] = '0';
-		replace_image(game, (*game).player.i, (*game).player.j, xpm);
-		(*game).player.i = i;
-		(*game).player.j = j;
-		(*game).mvt++;
-		print_mvt(game);
-		(*game).map[(*game).player.i][(*game).player.j] = 'P';
-		replace_image(game, (*game).player.i, (*game).player.j, xpm);
-	}
-	else
-		replace_image(game, (*game).player.i, (*game).player.j, xpm);
 }
 
 void	open_exit(t_game *game)

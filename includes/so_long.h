@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 20:44:35 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/20 19:03:38 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/20 20:50:14 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ typedef struct s_game
 	// t_img				imgTg;
 	void				*tab_img[IMG_NBR];
 	// sprite
-	nsec				t0;	
+	nsec				t0;
 	int					exit_frame;
 	// anim
 	nsec				t_tig;
@@ -199,6 +199,7 @@ int						sprite_exit(t_game *game);
 int						get_diff_ms(nsec nano, nsec t0);
 int						animation(t_game *game);
 int						init_tig_on_map(t_game *game);
+int						put_tig_on_center(t_game *game);
 void					nbr_tig_on_map(t_game *game);
 int						anim_tig(t_game *game);
 int						handle_tig(t_game *game);
