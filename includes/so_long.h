@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 20:44:35 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/19 23:39:37 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/20 03:42:56 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,13 @@
 # define P_LEFT "images/left.xpm"
 # define P_RIGHT "images/right.xpm"
 # define EXIT0 "images/exit0.xpm"
-# define EXIT1 "images/exit1.xpm"
-# define EXIT1X "images/exit1x.xpm"
+# define EXIT1A "images/exit1a.xpm"
+# define EXIT1B "images/exit1b.xpm"
+# define EXIT1C "images/exit1c.xpm"
 # define TIGG "images/tigg.xpm"
 # define TIGR "images/tigr.xpm"
 # define C00_NBR 9
-# define IMG_NBR 20
+# define IMG_NBR 21
 
 typedef struct s_img
 {
@@ -87,7 +88,7 @@ typedef struct s_game
 	int					cols;
 	// utils
 	t_point				player;
-	t_point				exit;
+	t_point				exit;	
 	int					nbr_c;
 	int					open;
 	int					mvt;
@@ -108,8 +109,9 @@ typedef struct s_game
 	t_img				imgC08;
 	int					select_c;
 	t_img				imgE0;
-	t_img				imgE1;
-	t_img				imgE1x;
+	t_img				imgE1a;
+	t_img				imgE1b;
+	t_img				imgE1c;
 	t_img				imgPu;
 	t_img				imgPd;
 	t_img				imgPl;
@@ -117,10 +119,11 @@ typedef struct s_game
 	t_img				imgTg;
 	t_img				imgTr;
 	void				*tab_img[IMG_NBR];
-	// sprite
+	// bonus
 	nsec				t0;
 	int					exit_frame;
 	int					nbr_tig;
+	t_point				tig;
 }						t_game;
 
 // main.c

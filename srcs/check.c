@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 00:29:14 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/19 23:23:45 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/20 03:14:47 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	check_map2(t_game *game)
 char	*check_rows(t_game *game)
 {
 	if ((*game).rows < 3)
-		return ("Invalid map (not enough lines).\n");
+		return ("Error\nInvalid map (not enough lines).\n");
 	return (NULL);
 }
 
@@ -68,19 +68,19 @@ char	*check_cols(t_game *game)
 	// '\n' except for the last
 	(*game).cols = ft_strlen((*game).map[0]) - 1;
 	if ((*game).cols == 0)
-		return ("Invalid map (empty line).\n");
+		return ("Error\nInvalid map (empty line).\n");
 	while (i < (*game).rows - 1)
 	{
 		if (ft_strlen((*game).map[i]) - 1 == 0)
-			return ("Invalid map (empty line).\n");
+			return ("Error\nInvalid map (empty line).\n");
 		if (ft_strlen((*game).map[i]) - 1 != (*game).cols)
-			return ("Invalid map (not rectangular).\n");
+			return ("Error\nInvalid map (not rectangular).\n");
 		i++;
 	}
 	if (ft_strlen((*game).map[i]) - last_nl((*game).map[i]) == 0)
-		return ("Invalid map (empty line).\n");
+		return ("Error\nInvalid map (empty line).\n");
 	if (ft_strlen((*game).map[i]) - last_nl((*game).map[i]) != (*game).cols)
-		return ("Invalid map (not rectangular).\n");
+		return ("Error\nInvalid map (not rectangular).\n");
 	return (NULL);
 }
 
@@ -106,7 +106,7 @@ char	*check_vertical_wall(t_game *game)
 	while (i < (*game).rows)
 	{
 		if ((*game).map[i][0] != '1' || (*game).map[i][(*game).cols - 1] != '1')
-			return ("Invalid map (wall missing).\n");
+			return ("Error\nInvalid map (wall missing).\n");
 		i++;
 	}
 	return (NULL);
@@ -120,9 +120,9 @@ char	*check_horizontal_wall(t_game *game)
 	while (j < (*game).cols)
 	{
 		if ((*game).map[0][j] != '1')
-			return ("Invalid map (wall missing).\n");
+			return ("Error\nInvalid map (wall missing).\n");
 		if ((*game).map[(*game).rows - 1][j] != '1')
-			return ("Invalid map (wall missing).\n");
+			return ("Error\nInvalid map (wall missing).\n");
 		j++;
 	}
 	return (NULL);
@@ -152,9 +152,9 @@ char	*check_player(t_game *game)
 		i++;
 	}
 	if (count > 1)
-		return ("Invalid map (too many players).\n");
+		return ("Error\nInvalid map (too many players).\n");
 	if (count < 1)
-		return ("Invalid map (player missing).\n");
+		return ("Error\nInvalid map (player missing).\n");
 	return (NULL);
 	/**************************************************************/
 }
@@ -183,9 +183,9 @@ char	*check_exit(t_game *game)
 		i++;
 	}
 	if (count > 1)
-		return ("Invalid map (too many exits).\n");
+		return ("Error\nInvalid map (too many exits).\n");
 	else if (count < 1)
-		return ("Invalid map (exit missing).\n");
+		return ("Error\nInvalid map (exit missing).\n");
 	return (NULL);
 	(*game).open = 0;
 	/**************************************************************/
@@ -211,7 +211,7 @@ char	*check_collectible(t_game *game)
 		i++;
 	}
 	if (count < 1)
-		return ("Invalid map (collectible missing).\n");
+		return ("Error\nInvalid map (collectible missing).\n");
 	(*game).nbr_c = count;
 	(*game).select_c = count;
 	return (NULL);
@@ -231,7 +231,7 @@ char	*check_other(t_game *game)
 		{
 			c = (*game).map[i][j];
 			if (!(c == 'P' || c == 'E' || c == 'C' || c == '0' || c == '1'))
-				return ("Invalid map (wrong character).\n");
+				return ("Error\nInvalid map (wrong character).\n");
 			j++;
 		}
 		i++;
@@ -253,9 +253,9 @@ char	*check_path(t_game *game)
 		while (j < (*game).cols)
 		{
 			if ((*game).map[i][j] == 'C')
-				return ("Invalid map (no path to get all collectibles).\n");
+				return ("Error\nInvalid map (no path to get all collectibles).\n");
 			if ((*game).map[i][j] == 'E')
-				return ("Invalid map (no path to get exit).\n");
+				return ("Error\nInvalid map (no path to get exit).\n");
 			j++;
 		}
 		i++;

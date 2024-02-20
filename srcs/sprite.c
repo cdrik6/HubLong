@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 17:40:25 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/20 00:52:45 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/20 03:35:52 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,23 @@ int	sprite_exit(t_game *game)
 		if ((*game).exit_frame == 0)
 		{
 			mlx_put_image_to_window((*game).mlx, (*game).mlx_win,
-				(*game).imgE1x.xpm, (*game).exit.j * IMG_W, (*game).exit.i
+				(*game).imgE1a.xpm, (*game).exit.j * IMG_W, (*game).exit.i
 				* IMG_H);
 			(*game).exit_frame = 1;
 		}
+		else if ((*game).exit_frame == 1)
+		{
+			mlx_put_image_to_window((*game).mlx, (*game).mlx_win,
+				(*game).imgE1b.xpm, (*game).exit.j * IMG_W, (*game).exit.i
+				* IMG_H);
+			(*game).exit_frame = 2;
+		}
 		else
 		{
-			(*game).exit_frame = 0;
 			mlx_put_image_to_window((*game).mlx, (*game).mlx_win,
-				(*game).imgE1.xpm, (*game).exit.j * IMG_W, (*game).exit.i
+				(*game).imgE1c.xpm, (*game).exit.j * IMG_W, (*game).exit.i
 				* IMG_H);
+			(*game).exit_frame = 0;
 		}
 	}
 	return (0);
@@ -76,7 +83,7 @@ int	sprite_tig(t_game *game)
 		if ((*game).exit_frame == 0)
 		{
 			mlx_put_image_to_window((*game).mlx, (*game).mlx_win,
-				(*game).imgE1x.xpm, (*game).exit.j * IMG_W, (*game).exit.i
+				(*game).imgE1a.xpm, (*game).exit.j * IMG_W, (*game).exit.i
 				* IMG_H);
 			(*game).exit_frame = 1;
 		}
@@ -84,35 +91,53 @@ int	sprite_tig(t_game *game)
 		{
 			(*game).exit_frame = 0;
 			mlx_put_image_to_window((*game).mlx, (*game).mlx_win,
-				(*game).imgE1.xpm, (*game).exit.j * IMG_W, (*game).exit.i
+				(*game).imgE1b.xpm, (*game).exit.j * IMG_W, (*game).exit.i
 				* IMG_H);
 		}
 	}
 	return (0);
 }
 
-
-
-void	init_tig_on_map(t_game *game, int i, int j)
+void	nbr_tig_on_map(t_game *game)
 {
-	//(*game).open = 0;
-	if ((*game).map[i][j] == '1')
-		mlx_put_image_to_window((*game).mlx, (*game).mlx_win, (*game).img1.xpm,
-			j * IMG_W, i * IMG_H);
-	if ((*game).map[i][j] == '0')
-		mlx_put_image_to_window((*game).mlx, (*game).mlx_win, (*game).img0.xpm,
-			j * IMG_W, i * IMG_H);
-	if ((*game).map[i][j] == 'E')
-		mlx_put_image_to_window((*game).mlx, (*game).mlx_win, (*game).imgE1.xpm,
-			j * IMG_W, i * IMG_H);
-	if ((*game).map[i][j] == 'P')
-		mlx_put_image_to_window((*game).mlx, (*game).mlx_win, (*game).imgPu.xpm,
-			j * IMG_W, i * IMG_H);
-	if ((*game).map[i][j] == 'C')
-		init_C_image_on_map(game, i, j);
+	int	count;
+	int	i;
+	int	j;
+
+	count = 0;
+	i = 0;
+	while (i < (*game).rows)
+	{
+		j = 0;
+		while (j < (*game).cols)
+		{
+			if ((*game).map[i][j] == '0')
+				count++;
+			j++;
+		}
+		i++;
+	}
+	if (count < 5)
+		(*game).nbr_tig = 0;
+	else if (count < 25)
+		(*game).nbr_tig = 1;
+	else
+		(*game).nbr_tig = 2;
 }
 
+void	init_tig_on_map(t_game *game)
+{
+	int	i;
+	int	j;
 
+	srand(time(0));
+	i = rand() % (*game).rows;
+	j = rand() % (*game).cols;
+	if ((*game).map[i][j] == '0')
+		mlx_put_image_to_window((*game).mlx, (*game).mlx_win, (*game).imgTr.xpm,
+			j * IMG_W, i * IMG_H);
+	else if 
+}
 
 // printf("s %ld\n", (*game).start.tv_nsec);
 // printf("e %ld\n", end.tv_nsec);
