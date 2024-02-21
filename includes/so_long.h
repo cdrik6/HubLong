@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 20:44:35 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/20 20:50:14 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/21 00:50:43 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 # include "get_next_line.h"
 # include <X11/X.h>
 # include <X11/keysym.h>
-//# include <linux/time.h>
-# include <stdio.h>
 # include <time.h>
+//# include <linux/time.h>
+//# include <stdio.h>
 
 # define IMG_W 32
 # define IMG_H 32
@@ -28,10 +28,6 @@
 # define KEY_A 97
 # define KEY_S 115
 # define KEY_D 100
-// # define KEY_2 65433
-// # define KEY_4 65430
-// # define KEY_6 65432
-// # define KEY_8 65431
 # define KEY_UP 65362
 # define KEY_LEFT 65361
 # define KEY_RIGHT 65363
@@ -60,7 +56,6 @@
 # define EXIT1C "images/exit1c.xpm"
 # define EXIT1D "images/exit1d.xpm"
 # define TIGR "images/tigr.xpm"
-//# define TIGG "images/tigg.xpm"
 # define C00_NBR 9
 # define IMG_NBR 21
 
@@ -79,55 +74,53 @@ typedef struct s_point
 
 }						t_point;
 
-typedef struct timespec	nsec;
+typedef struct timespec	t_nsec;
 
 typedef struct s_game
 {
-	// map
 	char				**map;
 	int					rows;
 	int					cols;
-	// utils
+
 	t_point				player;
 	t_point				exit;
 	int					nbr_c;
 	int					open;
 	int					mvt;
-	// mlx
+
 	void				*mlx;
 	void				*mlx_win;
-	// images
+
 	t_img				img1;
 	t_img				img0;
-	t_img				imgC00;
-	t_img				imgC01;
-	t_img				imgC02;
-	t_img				imgC03;
-	t_img				imgC04;
-	t_img				imgC05;
-	t_img				imgC06;
-	t_img				imgC07;
-	t_img				imgC08;
+	t_img				imgc00;
+	t_img				imgc01;
+	t_img				imgc02;
+	t_img				imgc03;
+	t_img				imgc04;
+	t_img				imgc05;
+	t_img				imgc06;
+	t_img				imgc07;
+	t_img				imgc08;
 	int					select_c;
-	t_img				imgE0;
-	t_img				imgE1a;
-	t_img				imgE1b;
-	t_img				imgE1c;
-	t_img				imgE1d;
-	t_img				imgPu;
-	t_img				imgPd;
-	t_img				imgPl;
-	t_img				imgPr;
-	t_img				imgTr;
-	// t_img				imgTg;
+	t_img				imge0;
+	t_img				imge1a;
+	t_img				imge1b;
+	t_img				imge1c;
+	t_img				imge1d;
+	t_img				imgpu;
+	t_img				imgpd;
+	t_img				imgpl;
+	t_img				imgpr;
+	t_img				imgtr;
 	void				*tab_img[IMG_NBR];
-	// sprite
-	nsec				t0;
+
+	t_nsec				t0;
 	int					exit_frame;
-	// anim
-	nsec				t_tig;
-	int					nbr_tig;
+
+	t_nsec				t_tig;
 	t_point				tig;
+	int					nbr_tig;
 }						t_game;
 
 // main.c
@@ -136,74 +129,94 @@ int						check_input(int argc, char **argv);
 char					**create_map(int rows, char *file);
 char					**fill_map(char **newmap, int rows, int fd);
 int						count_rows(t_game *game, char *file);
+
+// output.c
 void					free_map(char **map, int rows);
 void					error_msg(int k);
+void					ft_putnbr_fd(int n, int fd);
+void					ft_putstr_fd(char *s, int fd);
 
-// check.c
+// check1.c
 int						check_map(t_game *game);
 int						check_map2(t_game *game);
 char					*check_rows(t_game *game);
 char					*check_cols(t_game *game);
 int						last_nl(char *str);
+
+// check2.c
 char					*check_vertical_wall(t_game *game);
 char					*check_horizontal_wall(t_game *game);
-char					*check_player(t_game *game);
-char					*check_exit(t_game *game);
 char					*check_collectible(t_game *game);
 char					*check_other(t_game *game);
+
+// check3.c
+char					*check_player(t_game *game);
+char					*check_player_case(int count);
+char					*check_exit(t_game *game);
+char					*check_exit_case(int count);
+
+// check3.c
 char					*check_path(t_game *game);
 void					flood_fill(t_game *game, int i, int j);
-void					check_flood(t_game *game);
 void					back_flood(t_game *game);
-// void		get_point(t_game game, t_point *point, char c);
-// t_point		*init_point(void);
+// void					check_flood(t_game *game);
 
 // libft
-char					*ft_strnstr(const char *big, const char *little,
-							int len);
-void					ft_putnbr_fd(int n, int fd);
-void					ft_putstr_fd(char *s, int fd);
 size_t					len_nbr(int n);
 char					*fill_nbr(char *nbr, size_t size, int n);
 char					*ft_itoa(int n);
 char					*lib_strjoin(char *s1, char *s2);
+char					*ft_strnstr(const char *big, const char *little,
+							int len);
 
-// mlx.c
+// mlx1.c
 int						init_mlx(t_game *game);
+void					start_game(t_game *game);
+int						check_size_map(t_game *game);
 void					draw_init_map(t_game *game);
-
 void					image_loader(t_game *game);
+
+// mlx2.c
 void					load_image(t_game *game);
 void					load_image2(t_game *game);
 void					load_tab_image(t_game *game);
 int						check_tab_image(t_game *game);
 void					destroy_tab_image(t_game *game);
 
+// mlx3.c
 void					init_image_on_map(t_game *game, int i, int j);
-void					init_C_image_on_map(t_game *game, int i, int j);
+void					init_c_image_on_map(t_game *game, int i, int j);
+void					init_c_image_on_map2(t_game *game, int i, int j);
 void					free_game(t_game *game);
-int						handle_input(int keysym, t_game *game);
 void					destroy_image(t_game *game);
-void					free_game(t_game *game);
 
+// mlx4.c
+int						handle_input(int keysym, t_game *game);
 void					replace_image(t_game *game, int i, int j, void *xpm);
 void					move(t_game *game, int k, int m, void *xpm);
+void					move_prev(t_game *game, int i, int j, void *xpm);
+
+// mlx5.c
 int						x_close(t_game *game);
 void					open_exit(t_game *game);
 void					game_win(t_game *game);
-int						check_size_map(t_game *game);
 void					print_mvt(t_game *game);
 
-// bonus
-int						sprite_exit(t_game *game);
-int						get_diff_ms(nsec nano, nsec t0);
+// sprite
 int						animation(t_game *game);
-int						init_tig_on_map(t_game *game);
-int						put_tig_on_center(t_game *game);
-void					nbr_tig_on_map(t_game *game);
+int						get_diff_ms(t_nsec nano, t_nsec t0);
+int						sprite_exit(t_game *game);
+void					put_frame(t_game *game, void *xpm);
+
+// tig.c
 int						anim_tig(t_game *game);
 int						handle_tig(t_game *game);
 void					move_tig(t_game *game, int k, int m, void *xpm);
-void					game_lose(t_game *game);
+void					game_lose(t_game *game, int i);
+
+// tig_init.c
+int						nbr_tig_on_map(t_game *game);
+int						put_tig_on_center(t_game *game);
+int						init_tig_on_map(t_game *game);
 
 #endif

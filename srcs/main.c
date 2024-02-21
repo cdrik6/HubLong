@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 19:45:04 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/20 20:42:02 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/20 23:28:22 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,45 +107,4 @@ int	count_rows(t_game *game, char *file)
 		error_msg(0);
 	(*game).rows = count;
 	return (count);
-}
-
-void	free_map(char **map, int rows)
-{
-	int	i;
-
-	i = 0;
-	if (map)
-	{
-		while (i < rows)
-		{
-			if (map[i])
-				free(map[i]);
-			i++;
-		}
-		free(map);
-	}
-}
-
-void	error_msg(int k)
-{
-	if (k == 0)
-		ft_putstr_fd("Error\nEmpty file.\n", 2);
-	if (k == 1)
-		ft_putstr_fd("Error\nCan't malloc the map.\n", 2);
-	if (k == 2)
-		ft_putstr_fd("Error\nCan't open the file.\n", 2);
-	if (k == 3)
-		ft_putstr_fd("Error\nToo many arguments.\n", 2);
-	if (k == 4)
-		ft_putstr_fd("Error\nMap file (.ber) is missing.\n", 2);
-	if (k == 5)
-		ft_putstr_fd("Error\nMap should be a \".ber\" file.\n", 2);
-	if (k == 6)
-		ft_putstr_fd("Error\nCan't initialize the MLX.\n", 2);
-	if (k == 7)
-		ft_putstr_fd("Error\nThe map is too big for the screen.\n", 2);
-	if (k == 8)
-		ft_putstr_fd("Error\nMLX can't generate the window.\n", 2);
-	if (k == 9)
-		ft_putstr_fd("Error\nMLX can't load whole images.\n", 2);
 }

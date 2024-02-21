@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 14:36:17 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/08 00:32:38 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/20 23:45:51 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*get_next_line(int fd)
 	char		*stash;
 	char		*line;
 	char		*stash_next;
-	int		i;
+	int			i;
 
 	if (fd < 0 || BUFFER_SIZE < 1)
 		return (NULL);
