@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 20:00:45 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/22 19:27:57 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/21 00:43:16 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,13 @@ void	start_game(t_game *game)
 	image_loader(game);
 	draw_init_map(game);
 	(*game).mvt = 0;
+	print_mvt(game);
+	clock_gettime(CLOCK_MONOTONIC, &((*game).t0));
+	clock_gettime(CLOCK_MONOTONIC, &((*game).t_tig));
+	(*game).exit_frame = 0;
+	if (nbr_tig_on_map(game) == 1)
+		init_tig_on_map(game);
+	mlx_loop_hook((*game).mlx, animation, game);
 	mlx_hook((*game).mlx_win, KeyPress, KeyPressMask, handle_input, game);
 	mlx_hook((*game).mlx_win, DestroyNotify, NoEventMask, x_close, game);
 	mlx_loop((*game).mlx);

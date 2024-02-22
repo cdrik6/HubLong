@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mlx4.c                                             :+:      :+:    :+:   */
+/*   mlx4_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 00:37:38 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/22 19:20:58 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/22 19:21:09 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void	move(t_game *game, int k, int m, void *xpm)
 	j = (*game).player.j + m;
 	if (i >= 0 && j >= 0 && i < (*game).rows && j < (*game).cols)
 	{
+		if (i == (*game).tig.i && j == (*game).tig.j)
+			game_lose(game, 0);
 		if ((*game).map[i][j] == 'C')
 			open_exit(game);
 		if ((*game).map[i][j] == 'E' && (*game).open == 1)

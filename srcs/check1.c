@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 00:29:14 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/22 01:58:27 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/22 22:36:59 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,12 @@ int	check_map2(t_game *game)
 
 char	*check_rows(t_game *game)
 {
-	if ((*game).rows < 3)
+	int	i;
+
+	i = (*game).rows;
+	if (i < 3)
 		return ("Error\nInvalid map (not enough lines).\n");
-	if (ft_strlen((*game).map[(*game).rows
-			- 2]) == ft_strlen((*game).map[(*game).rows - 1]))
+	if (ft_strlen((*game).map[i - 2]) == ft_strlen((*game).map[i - 1]))
 		return ("Error\nInvalid map (empty line).\n");
 	return (NULL);
 }
@@ -92,6 +94,8 @@ int	last_nl(char *str)
 	int	i;
 
 	i = 0;
+	if (!str)
+		return (0);
 	while (str[i])
 	{
 		if (str[i] == '\n')

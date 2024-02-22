@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 19:45:04 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/21 23:37:50 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/22 23:00:50 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,13 @@ int	check_input(int argc, char **argv)
 	return (1);
 }
 
+// newmap = malloc(sizeof(char *) * (rows + 1));
 char	**create_map(int rows, char *file)
 {
 	char	**newmap;
 	int		fd;
 
-	newmap = malloc(sizeof(char *) * (rows + 1));
+	newmap = ft_calloc(sizeof(char *), (rows + 1));
 	if (!newmap)
 		return (error_msg(1), NULL);
 	fd = open(file, O_RDONLY);
@@ -68,21 +69,23 @@ char	**fill_map(char **newmap, int rows, int fd)
 	while (i < rows)
 	{
 		line = get_next_line(fd);
-		newmap[i] = malloc(sizeof(char) * (ft_strlen(line) + 1));
-		if (!newmap[i])
-			return (free_map(newmap, rows), error_msg(1), NULL);
-		j = 0;
-		while (line[j])
+		if (line)
 		{
-			newmap[i][j] = line[j];
-			j++;
+			newmap[i] = malloc(sizeof(char) * (ft_strlen(line) + 1));
+			if (!newmap[i])
+				return (free_map(newmap, rows), error_msg(1), NULL);
+			j = 0;
+			while (line[j])
+			{
+				newmap[i][j] = line[j];
+				j++;
+			}
+			newmap[i][j] = '\0';
+			free(line);
 		}
-		newmap[i][j] = '\0';
-		free(line);
 		i++;
 	}
-	newmap[rows] = NULL;
-	return (newmap);
+	return (newmap[rows] = NULL, newmap);
 }
 
 int	count_rows(t_game *game, char *file)

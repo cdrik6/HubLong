@@ -6,7 +6,7 @@
 #    By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/25 23:32:02 by caguillo          #+#    #+#              #
-#    Updated: 2024/02/22 01:49:34 by caguillo         ###   ########.fr        #
+#    Updated: 2024/02/22 19:17:16 by caguillo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,20 +24,17 @@ SRCS		=	./srcs/main.c \
 				./srcs/mlx3.c \
 				./srcs/mlx4.c \
 				./srcs/mlx5.c \
-				./srcs/sprite.c \
-				./srcs/tig.c \
-				./srcs/tig_init.c \
 				./srcs/libft.c \
 				./srcs/get_next_line.c \
 				./srcs/get_next_line_utils.c
 
-SRCS_BONUS		=	./srcs/main.c \
+SRCS_BONUS	=	./srcs/main.c \
 				./srcs/output.c \
 				./srcs/check1.c \
 				./srcs/check2.c \
 				./srcs/check3.c \
 				./srcs/check4.c \
-				./srcs/mlx1.c \
+				./srcs/mlx1_bonus.c \
 				./srcs/mlx2.c \
 				./srcs/mlx3.c \
 				./srcs/mlx4.c \
