@@ -6,7 +6,7 @@
 #    By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/25 23:32:02 by caguillo          #+#    #+#              #
-#    Updated: 2024/02/22 19:17:16 by caguillo         ###   ########.fr        #
+#    Updated: 2024/02/23 00:05:47 by caguillo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ SRCS_BONUS	=	./srcs/main.c \
 				./srcs/mlx1_bonus.c \
 				./srcs/mlx2.c \
 				./srcs/mlx3.c \
-				./srcs/mlx4.c \
+				./srcs/mlx4_bonus.c \
 				./srcs/mlx5_bonus.c \
 				./srcs/sprite.c \
 				./srcs/tig.c \
