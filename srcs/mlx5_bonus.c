@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 00:37:41 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/22 01:46:23 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/21 00:42:55 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,18 @@ void	print_mvt(t_game *game)
 	nbr = NULL;
 	nbr = ft_itoa((*game).mvt);
 	if (nbr)
-		str = lib_strjoin(nbr, " Movements\n");
+		str = lib_strjoin("Movements: ", nbr);
 	else
 		str = NULL;
+	mlx_put_image_to_window((*game).mlx, (*game).mlx_win, (*game).img1.xpm, 0
+		* IMG_W, 0 * IMG_H);
+	mlx_put_image_to_window((*game).mlx, (*game).mlx_win, (*game).img1.xpm, 1
+		* IMG_W, 0 * IMG_H);
+	mlx_put_image_to_window((*game).mlx, (*game).mlx_win, (*game).img1.xpm, 2
+		* IMG_W, 0 * IMG_H);
 	if (str)
-		ft_putstr_fd(str, 1);
+		mlx_string_put((*game).mlx, (*game).mlx_win, 0, IMG_H / 2, 0xFFFFFF,
+			str);
 	free(nbr);
 	free(str);
 }

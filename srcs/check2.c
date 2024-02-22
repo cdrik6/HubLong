@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 23:33:34 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/20 23:36:05 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/21 21:15:52 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*check_vertical_wall(t_game *game)
 	while (i < (*game).rows)
 	{
 		if ((*game).map[i][0] != '1' || (*game).map[i][(*game).cols - 1] != '1')
-			return ("Error\nInvalid map (wall missing).\n");
+			return ("Error\nInvalid map (wall missing/empty line).\n");
 		i++;
 	}
 	return (NULL);

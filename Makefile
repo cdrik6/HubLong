@@ -6,12 +6,12 @@
 #    By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/25 23:32:02 by caguillo          #+#    #+#              #
-#    Updated: 2024/02/21 00:44:07 by caguillo         ###   ########.fr        #
+#    Updated: 2024/02/22 01:49:34 by caguillo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	so_long
-# NAME_BONUS	=	checker
+NAME_BONUS	=	so_long_bonus
 
 SRCS		=	./srcs/main.c \
 				./srcs/output.c \
@@ -30,19 +30,24 @@ SRCS		=	./srcs/main.c \
 				./srcs/libft.c \
 				./srcs/get_next_line.c \
 				./srcs/get_next_line_utils.c
-				
-# SRCS_BONUS	=	./srcs/checker.c \
-				./srcs/list_tools_1.c \
-				./srcs/list_tools_2.c \
-				./srcs/load_data.c \
-				./srcs/check_data.c \
-				./srcs/rules_1.c \
-				./srcs/rules_2.c \
-				./srcs/sort_1.c \
-				./srcs/sort_2.c \
-				./srcs/sort_3.c \
-				./srcs/sort_4.c \
-				./srcs/sort_5.c			
+
+SRCS_BONUS		=	./srcs/main.c \
+				./srcs/output.c \
+				./srcs/check1.c \
+				./srcs/check2.c \
+				./srcs/check3.c \
+				./srcs/check4.c \
+				./srcs/mlx1.c \
+				./srcs/mlx2.c \
+				./srcs/mlx3.c \
+				./srcs/mlx4.c \
+				./srcs/mlx5_bonus.c \
+				./srcs/sprite.c \
+				./srcs/tig.c \
+				./srcs/tig_init.c \
+				./srcs/libft.c \
+				./srcs/get_next_line.c \
+				./srcs/get_next_line_utils.c
 
 MLX_DIR		=	./minilibx-linux
 MLX			= 	$(MLX_DIR)/libmlx.a
@@ -54,11 +59,8 @@ INCS_DIR	=	-Iincludes -Iminilibx-linux
 CC			=	gcc
 CFLAGS		=	-Wall -Wextra -Werror
 
-VALGRIND	= valgrind --leak-check=full --show-leak-kinds=all \
-			--track-origins=yes --quiet --tool=memcheck --keep-debuginfo=yes
-
 OBJS		=	$(SRCS:.c=.o)
-#OBJS_BONUS	=	$(SRCS_BONUS:.c=.o)
+OBJS_BONUS	=	$(SRCS_BONUS:.c=.o)
 
 %.o:%.c		$(INCS_SRCS)
 			$(CC) $(CFLAGS) $(INCS_DIR) -c $< -o $(<:.c=.o)
@@ -71,27 +73,19 @@ all:		$(NAME)
 
 re: 		fclean all
 
-#$(NAME_BONUS):	$(OBJS_BONUS) 
-#			make -C $(LIBFT_DIR)
-#			mv $(LIBFT) .
-#			$(CC) $(CFLAGS) $(OBJS_BONUS) $(INCS) -L . -lft -o $(NAME_BONUS)
+$(NAME_BONUS):	$(OBJS_BONUS) 
+			make -C $(MLX_DIR)
+			$(CC) $(CFLAGS) $(OBJS_BONUS) $(MLXLIB) -o $(NAME_BONUS)
 
-#bonus:		$(NAME_BONUS)
+bonus:		$(NAME_BONUS)
 
 rebonus: 	fclean bonus
 			
 clean:
 			make -C $(MLX_DIR) clean
-			rm -f $(OBJS)
-#			rm -f $(OBJS) $(OBJS_BONUS)
+			rm -f $(OBJS) $(OBJS_BONUS)
 
 fclean: 	clean
-			rm -f $(NAME)
-#			rm -f $(NAME) mlx.a	
-#			rm -f $(NAME) $(NAME_BONUS) libft.a	
-
-run:		$(NAME)
-				$(VALGRIND) ./$(NAME) maps/map1.ber
-
-.PHONY: 	all clean fclean re run
-#.PHONY: 	all clean fclean re bonus rebonus
+			rm -f $(NAME) $(NAME_BONUS)
+			
+.PHONY: 	all clean fclean re bonus rebonus

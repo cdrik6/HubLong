@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 19:45:04 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/20 23:28:22 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/21 23:37:50 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,3 +108,11 @@ int	count_rows(t_game *game, char *file)
 	(*game).rows = count;
 	return (count);
 }
+
+// printf("(%s)\n", line);
+// printf("%d\n", ft_strlen(line));
+// if (ft_strlen(line) == 2)
+// {
+// 	printf("0:[%c]\n", line[0]);
+// 	printf("1:[%c]\n", line[1]);
+// }

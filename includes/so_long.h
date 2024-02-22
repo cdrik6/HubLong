@@ -6,20 +6,20 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 20:44:35 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/21 00:50:43 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/22 01:43:10 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
+# include "../includes/get_next_line.h"
 # include "../minilibx-linux/mlx.h"
-# include "get_next_line.h"
 # include <X11/X.h>
 # include <X11/keysym.h>
 # include <time.h>
 //# include <linux/time.h>
-//# include <stdio.h>
+# include <stdio.h>
 
 # define IMG_W 32
 # define IMG_H 32
@@ -159,7 +159,7 @@ char					*check_exit_case(int count);
 char					*check_path(t_game *game);
 void					flood_fill(t_game *game, int i, int j);
 void					back_flood(t_game *game);
-// void					check_flood(t_game *game);
+//void					check_flood(t_game *game);
 
 // libft
 size_t					len_nbr(int n);

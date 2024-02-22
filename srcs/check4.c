@@ -6,19 +6,18 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 23:37:31 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/20 23:38:23 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/22 01:58:36 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-// check_flood(game);
 char	*check_path(t_game *game)
 {
 	int	i;
 	int	j;
 
-	flood_fill(game, (*game).player.i, (*game).player.i);
+	flood_fill(game, (*game).player.i, (*game).player.j);
 	i = 0;
 	while (i < (*game).rows)
 	{
@@ -43,17 +42,25 @@ void	flood_fill(t_game *game, int i, int j)
 		(*game).map[i][j] = 'D';
 	else
 		(*game).map[i][j] = 'X';
+	if ((*game).map[i + 1][j] == 'E')
+		(*game).map[i + 1][j] = 'F';
 	if ((*game).map[i + 1][j] != '1' && (*game).map[i + 1][j] != 'X'
-		&& (*game).map[i + 1][j] != 'D')
+		&& (*game).map[i + 1][j] != 'D' && (*game).map[i + 1][j] != 'F')
 		flood_fill(game, i + 1, j);
+	if ((*game).map[i - 1][j] == 'E')
+		(*game).map[i - 1][j] = 'F';
 	if ((*game).map[i - 1][j] != '1' && (*game).map[i - 1][j] != 'X'
-		&& (*game).map[i - 1][j] != 'D')
+		&& (*game).map[i - 1][j] != 'D' && (*game).map[i - 1][j] != 'F')
 		flood_fill(game, i - 1, j);
+	if ((*game).map[i][j + 1] == 'E')
+		(*game).map[i][j + 1] = 'F';
 	if ((*game).map[i][j + 1] != '1' && (*game).map[i][j + 1] != 'X'
-		&& (*game).map[i][j + 1] != 'D')
+		&& (*game).map[i][j + 1] != 'D' && (*game).map[i][j + 1] != 'F')
 		flood_fill(game, i, j + 1);
+	if ((*game).map[i][j - 1] == 'E')
+		(*game).map[i][j - 1] = 'F';
 	if ((*game).map[i][j - 1] != '1' && (*game).map[i][j - 1] != 'X'
-		&& (*game).map[i][j - 1] != 'D')
+		&& (*game).map[i][j - 1] != 'D' && (*game).map[i][j - 1] != 'F')
 		flood_fill(game, i, j - 1);
 }
 
@@ -81,6 +88,7 @@ void	back_flood(t_game *game)
 }
 
 /*
+// check_flood(game);
 void	check_flood(t_game *game)
 {
 	int	i;
@@ -93,5 +101,16 @@ void	check_flood(t_game *game)
 		printf("%s", (*game).map[i]);
 		i++;
 	}
-}
-*/
+}*/
+// if ((*game).map[i + 1][j] != '1' && (*game).map[i + 1][j] != 'X'
+// 	&& (*game).map[i + 1][j] != 'D')
+// 	flood_fill(game, i + 1, j);
+// if ((*game).map[i - 1][j] != '1' && (*game).map[i - 1][j] != 'X'
+// 	&& (*game).map[i - 1][j] != 'D')
+// 	flood_fill(game, i - 1, j);
+// if ((*game).map[i][j + 1] != '1' && (*game).map[i][j + 1] != 'X'
+// 	&& (*game).map[i][j + 1] != 'D')
+// 	flood_fill(game, i, j + 1);
+// if ((*game).map[i][j - 1] != '1' && (*game).map[i][j - 1] != 'X'
+// 	&& (*game).map[i][j - 1] != 'D')
+// 	flood_fill(game, i, j - 1);
