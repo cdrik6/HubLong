@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 20:44:35 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/22 01:43:10 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/25 16:01:57 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <X11/keysym.h>
 # include <time.h>
 //# include <linux/time.h>
-# include <stdio.h>
+//# include <stdio.h>
 
 # define IMG_W 32
 # define IMG_H 32
@@ -159,7 +159,7 @@ char					*check_exit_case(int count);
 char					*check_path(t_game *game);
 void					flood_fill(t_game *game, int i, int j);
 void					back_flood(t_game *game);
-//void					check_flood(t_game *game);
+// void					check_flood(t_game *game);
 
 // libft
 size_t					len_nbr(int n);
