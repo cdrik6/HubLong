@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 20:44:35 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/25 16:01:57 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/27 19:13:39 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ void					free_map(char **map, int rows);
 void					error_msg(int k);
 void					ft_putnbr_fd(int n, int fd);
 void					ft_putstr_fd(char *s, int fd);
+int						check_file_ext(char *fullname, char *ext);
 
 // check1.c
 int						check_map(t_game *game);

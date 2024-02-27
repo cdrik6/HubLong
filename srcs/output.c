@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 23:26:58 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/22 22:59:50 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/27 19:12:55 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,4 +91,24 @@ void	ft_putstr_fd(char *s, int fd)
 		write(fd, &s[i], 1);
 		i++;
 	}
+}
+
+int	check_file_ext(char *fullname, char *ext)
+{
+	int	n;
+	int	k;
+	int	i;
+	int	yes;
+
+	yes = 1;
+	k = ft_strlen(ext);
+	n = ft_strlen(fullname);
+	i = 0;
+	while (i < k)
+	{
+		if (fullname[n - i - 1] != ext[k - i - 1])
+			yes = 0;
+		i++;
+	}
+	return (yes);
 }

@@ -6,7 +6,7 @@
 /*   By: caguillo <caguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 19:45:04 by caguillo          #+#    #+#             */
-/*   Updated: 2024/02/22 23:00:50 by caguillo         ###   ########.fr       */
+/*   Updated: 2024/02/27 19:15:26 by caguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,14 @@ int	main(int argc, char **argv)
 	return (0);
 }
 
+// if (!ft_strnstr(argv[1], ".ber", ft_strlen(argv[1]))) -> corrected
 int	check_input(int argc, char **argv)
 {
 	if (argc > 2)
 		return (error_msg(3), 0);
 	if (argc < 2)
 		return (error_msg(4), 0);
-	if (!ft_strnstr(argv[1], ".ber", ft_strlen(argv[1])))
+	if (check_file_ext(argv[1], ".ber") == 0)
 		return (error_msg(5), 0);
 	return (1);
 }
